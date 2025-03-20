@@ -9,9 +9,13 @@ public class Test : MonoBehaviour
     public float maxFallingSpeed;
     public float gravityForce;
     public float jumpForce;
+    public float bumperForce;
 
     private float verticalSpeed;
     private Vector3 direction;
+    private Vector3 visibleDirection;
+    public int maxJumps;
+    private int jumpCount;
 
     [Header("Autorisations")]
     public bool canMoveRight;
@@ -33,6 +37,7 @@ public class Test : MonoBehaviour
     private Vector2 TopRightPosition;
     private Vector2 BottomRightPosition;
 
+    [Header("RayCasts")]
     public bool leftGroundCheck;
     public bool rightGroundCheck;
     public bool leftBottomWallCheck;
@@ -47,12 +52,17 @@ public class Test : MonoBehaviour
     private bool rightWallCheck;
     private bool ceilingCheck;
 
-
+    [Header("Collisions")]
     public float groundCheckDistance = 0.1f;
     public LayerMask terrain;
+    public LayerMask solidOnly;
+    public Collider2D feet;
+    public Collider2D core;
+    private float originalScale;
 
     void Start()
     {
+        originalScale = transform.localScale.x;
         verticalSpeed = 0;
         EnableGameplay();
     }
@@ -72,11 +82,21 @@ public class Test : MonoBehaviour
         isMoving();
 
         JumpFallMess();
+
+        CeilingThing();
     }
 
+    public void ResetJumpCount()
+    {
+        jumpCount = maxJumps;
+    }
     public void Jump()
     {
-        verticalSpeed = jumpForce;
+        if (jumpCount > 0)
+        {
+            verticalSpeed = jumpForce;
+            jumpCount -= 1;
+        }
     }
 
     public void Fall()
@@ -92,12 +112,9 @@ public class Test : MonoBehaviour
 
     public void JumpFallMess()
     {
-        if (Input.GetKey(KeyCode.Z))
+        if (groundCheck == false)
         {
-            if (groundCheck == false)
-            {
-                Fall();
-            }
+            Fall();
         }
         else
         {
@@ -105,24 +122,13 @@ public class Test : MonoBehaviour
             if (verticalSpeed < 0)
             {
                 verticalSpeed = 0;
+                ResetJumpCount();
             }
         }
 
         if (Input.GetKey(KeyCode.X))
         {
             Jump();
-        }
-        else
-        {
-            //Verify if Falling isn't already activated
-            if (Input.GetKey(KeyCode.Z) == false)
-            {
-                //Uses Fall to slow down the vertical speed of the character to 0.
-                if (verticalSpeed > 0)
-                {
-                    Fall();
-                }
-            }
         }
     }
 
@@ -132,6 +138,7 @@ public class Test : MonoBehaviour
         {
             if (canMoveRight)
             {
+                visibleDirection = Vector3.right;
                 MoveRight();
             }
         }
@@ -139,6 +146,7 @@ public class Test : MonoBehaviour
         {
             if (canMoveLeft)
             {
+                visibleDirection = Vector3.left;
                 MoveLeft();
             }
         }
@@ -174,6 +182,14 @@ public class Test : MonoBehaviour
         }
     }
 
+    private void CeilingThing()
+    {
+        if (ceilingCheck && verticalSpeed > 0)
+        {
+            verticalSpeed = 0;
+        }
+    }
+
     public void isSprintingVerif()
     {
         if (Input.GetKey(KeyCode.C))
@@ -189,6 +205,18 @@ public class Test : MonoBehaviour
             {
                 isSprinting = false;
             }
+        }
+    }
+
+    public void VisibleDirection()
+    {
+        if (visibleDirection == Vector3.right)
+        {
+            transform.localScale = new Vector3(-originalScale, transform.localScale.y, transform.localScale.z);
+        }
+        if (visibleDirection == Vector3.left)
+        {
+            transform.localScale = new Vector3(originalScale, transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -223,14 +251,14 @@ public class Test : MonoBehaviour
 
         leftGroundCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.down, groundCheckDistance, terrain);
         rightGroundCheck = Physics2D.Raycast(BottomRightPosition, Vector2.down, groundCheckDistance, terrain);
-        leftBottomWallCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.left, groundCheckDistance, terrain);
-        leftTopWallCheck = Physics2D.Raycast(TopLeftPosition, Vector2.left, groundCheckDistance, terrain);
-        rightBottomWallCheck = Physics2D.Raycast(BottomRightPosition, Vector2.right, groundCheckDistance, terrain);
-        rightTopWallCheck = Physics2D.Raycast(TopRightPosition, Vector2.right, groundCheckDistance, terrain);
-        leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, groundCheckDistance, terrain);
-        rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, groundCheckDistance, terrain);
+        leftBottomWallCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.left, groundCheckDistance, solidOnly);
+        leftTopWallCheck = Physics2D.Raycast(TopLeftPosition, Vector2.left, groundCheckDistance, solidOnly);
+        rightBottomWallCheck = Physics2D.Raycast(BottomRightPosition, Vector2.right, groundCheckDistance, solidOnly);
+        rightTopWallCheck = Physics2D.Raycast(TopRightPosition, Vector2.right, groundCheckDistance, solidOnly);
+        leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, groundCheckDistance, solidOnly);
+        rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, groundCheckDistance, solidOnly);
 
-        if (leftGroundCheck && rightGroundCheck)
+        if (leftGroundCheck || rightGroundCheck)
         {
             groundCheck = true;
         }
@@ -238,7 +266,7 @@ public class Test : MonoBehaviour
         {
             groundCheck = false;
         }
-        if (leftBottomWallCheck && leftTopWallCheck)
+        if (leftBottomWallCheck || leftTopWallCheck)
         {
             leftWallCheck = true;
         }
@@ -246,7 +274,7 @@ public class Test : MonoBehaviour
         {
             leftWallCheck = false;
         }
-        if (rightBottomWallCheck && rightTopWallCheck)
+        if (rightBottomWallCheck || rightTopWallCheck)
         {
             rightWallCheck = true;
         }
@@ -254,7 +282,7 @@ public class Test : MonoBehaviour
         {
             rightWallCheck = false;
         }
-        if (leftCeilingCheck && rightCeilingCheck)
+        if (leftCeilingCheck || rightCeilingCheck)
         {
             ceilingCheck = true;
         }
@@ -263,4 +291,19 @@ public class Test : MonoBehaviour
             ceilingCheck = false;
         }
     }
+
+    public void jumpOnJumpables()
+    {
+        if (verticalSpeed < 0)
+        {
+            Debug.Log("Jumpable");
+            verticalSpeed = bumperForce;
+        }
+    }
+
+    public void getHitBySomething()
+    {
+
+    }
+
 }

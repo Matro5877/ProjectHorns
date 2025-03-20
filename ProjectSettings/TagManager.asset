@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Solid Platform
+  - Non-Solid Platform
+  - Non Jumpable Enemy
+  - Jumpable
+  - Feet
+  - Core
   layers:
   - Default
   - TransparentFX
@@ -12,9 +17,9 @@ TagManager:
   - Terrain
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Platform
+  - Jumpable
+  - Non Jumpable Enemy
   - 
   - 
   - 

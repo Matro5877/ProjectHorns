@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class Test : MonoBehaviour
     public float gravityForce;
     public float jumpForce;
     public float bumperForce;
+    public float antiStuckSpeed;
 
     private float verticalSpeed;
     private Vector3 direction;
@@ -38,14 +40,25 @@ public class Test : MonoBehaviour
     private Vector2 BottomRightPosition;
 
     [Header("RayCasts")]
-    public bool leftGroundCheck;
-    public bool rightGroundCheck;
-    public bool leftBottomWallCheck;
-    public bool leftTopWallCheck;
-    public bool rightBottomWallCheck;
-    public bool rightTopWallCheck;
-    public bool leftCeilingCheck;
-    public bool rightCeilingCheck;
+    public RaycastHit2D leftGroundCheck;
+    public RaycastHit2D rightGroundCheck;
+    public RaycastHit2D leftBottomWallCheck;
+    public RaycastHit2D leftTopWallCheck;
+    public RaycastHit2D rightBottomWallCheck;
+    public RaycastHit2D rightTopWallCheck;
+    public RaycastHit2D leftCeilingCheck;
+    public RaycastHit2D rightCeilingCheck;
+
+    private float leftGroundDepth;
+    private float rightGroundDepth;
+    private float groundDepth;
+    private float leftBottomWallDepth;
+    private float leftTopWallDepth;
+    private float rightBottomWallDepth;
+    private float rightTopWallDepth;
+    private float leftCeilingDepth;
+    private float rightCeilingDepth;
+    private float depth;
 
     private bool groundCheck;
     private bool leftWallCheck;
@@ -60,6 +73,9 @@ public class Test : MonoBehaviour
     public Collider2D core;
     private float originalScale;
 
+    
+    private Vector2 superTransform2D;
+
     void Start()
     {
         originalScale = transform.localScale.x;
@@ -70,6 +86,7 @@ public class Test : MonoBehaviour
     void Update()
     {
         transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
+        superTransform2D = new Vector2(transform.position.x, transform.position.y);
 
         RayCastTest();
         Gameplay();
@@ -84,6 +101,10 @@ public class Test : MonoBehaviour
         JumpFallMess();
 
         CeilingThing();
+
+        AntiStuck();
+
+        //Chaos();
     }
 
     public void ResetJumpCount()
@@ -258,6 +279,30 @@ public class Test : MonoBehaviour
         leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, groundCheckDistance, solidOnly);
         rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, groundCheckDistance, solidOnly);
 
+        rightGroundDepth = rightGroundCheck.point.y - BottomRightPosition.y;
+        leftGroundDepth = leftGroundCheck.point.y - BottomLeftPosition.y;
+
+        CollisionsDoubleCheck();
+
+        AntiStuck();
+    }
+
+    public void jumpOnJumpables()
+    {
+        if (verticalSpeed < 0)
+        {
+            Debug.Log("Jumpable");
+            verticalSpeed = bumperForce;
+        }
+    }
+
+    public void getHitBySomething()
+    {
+
+    }
+
+    public void CollisionsDoubleCheck()
+    {
         if (leftGroundCheck || rightGroundCheck)
         {
             groundCheck = true;
@@ -292,18 +337,30 @@ public class Test : MonoBehaviour
         }
     }
 
-    public void jumpOnJumpables()
+    public void AntiStuck()
     {
-        if (verticalSpeed < 0)
+        groundDepth = rightGroundDepth;
+        if (leftGroundDepth > groundDepth)
         {
-            Debug.Log("Jumpable");
-            verticalSpeed = bumperForce;
+            groundDepth = leftGroundDepth;
+        }
+        if (groundDepth > -0.1 && verticalSpeed < 0)
+        {
+            depth = groundDepth;
+            AntiStuckExe();
         }
     }
 
-    public void getHitBySomething()
+    public void AntiStuckExe()
     {
-
+        transform.position = new Vector3(transform.position.x, transform.position.y + groundCheckDistance + depth, transform.position.z);
     }
 
+    public void Chaos()
+    {
+        for (int i = 0; i < 1000; i++)
+        {
+            Debug.Log("CHAOS");
+        }
+    }
 }

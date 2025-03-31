@@ -9,11 +9,13 @@ public class Test : MonoBehaviour
     public float sprintingSpeed;
     public float maxFallingSpeed;
     public float gravityForce;
+    public float lowerGravityForce;
     public float jumpForce;
     public float bumperForce;
     public float antiStuckSpeed;
 
     private float verticalSpeed;
+    private float horizontalSpeed;
     private Vector3 direction;
     private Vector3 visibleDirection;
     public int maxJumps;
@@ -54,10 +56,13 @@ public class Test : MonoBehaviour
     private float groundDepth;
     private float leftBottomWallDepth;
     private float leftTopWallDepth;
+    private float leftWallDepth;
     private float rightBottomWallDepth;
     private float rightTopWallDepth;
+    private float rightWallDepth;
     private float leftCeilingDepth;
     private float rightCeilingDepth;
+    private float ceilingDepth;
     private float depth;
 
     private bool groundCheck;
@@ -73,8 +78,9 @@ public class Test : MonoBehaviour
     public Collider2D core;
     private float originalScale;
 
-    
-    private Vector2 superTransform2D;
+    public float verticalHitForce;
+    public float horizontalHitForce;
+    private Vector2 playerPos2D;
 
     void Start()
     {
@@ -85,8 +91,11 @@ public class Test : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log($"verticalSpeed : {verticalSpeed}");
+
         transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
-        superTransform2D = new Vector2(transform.position.x, transform.position.y);
+        //transform.position += direction * horizontalSpeed * Time.deltaTime;
+        playerPos2D = new Vector2(transform.position.x, transform.position.y);
 
         RayCastTest();
         Gameplay();
@@ -107,24 +116,34 @@ public class Test : MonoBehaviour
         //Chaos();
     }
 
+    public void Timer(int duration)
+    {
+        
+    }
+
     public void ResetJumpCount()
     {
         jumpCount = maxJumps;
     }
-    public void Jump()
+    public void Jump(float force)
     {
-        if (jumpCount > 0)
-        {
-            verticalSpeed = jumpForce;
-            jumpCount -= 1;
-        }
+        verticalSpeed = force;
+        jumpCount -= 1;
     }
 
     public void Fall()
     {
         Debug.Log("isFalling");
 
-        verticalSpeed -= gravityForce * Time.deltaTime;
+        if (Input.GetKey(KeyCode.X))
+        {
+            verticalSpeed -= lowerGravityForce * Time.deltaTime;
+        }
+        else
+        {
+            verticalSpeed -= gravityForce * Time.deltaTime;
+        }
+        
         if (verticalSpeed < maxFallingSpeed)
         {
             verticalSpeed = maxFallingSpeed;
@@ -149,7 +168,10 @@ public class Test : MonoBehaviour
 
         if (Input.GetKey(KeyCode.X))
         {
-            Jump();
+            if (jumpCount > 0)
+            {
+                Jump(jumpForce);
+            }
         }
     }
 
@@ -163,13 +185,17 @@ public class Test : MonoBehaviour
                 MoveRight();
             }
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
             if (canMoveLeft)
             {
                 visibleDirection = Vector3.left;
                 MoveLeft();
             }
+        }
+        else
+        {
+            horizontalSpeed = 0;
         }
     }
 
@@ -196,10 +222,12 @@ public class Test : MonoBehaviour
         if (isSprinting)
         {
             transform.position += direction * sprintingSpeed * Time.deltaTime;
+            //horizontalSpeed += sprintingSpeed * Time.deltaTime;
         }
         else
         {
             transform.position += direction * walkingSpeed * Time.deltaTime;
+            //horizontalSpeed += walkingSpeed * Time.deltaTime;
         }
     }
 
@@ -281,6 +309,14 @@ public class Test : MonoBehaviour
 
         rightGroundDepth = rightGroundCheck.point.y - BottomRightPosition.y;
         leftGroundDepth = leftGroundCheck.point.y - BottomLeftPosition.y;
+        rightCeilingDepth = rightCeilingCheck.point.y - TopRightPosition.y;
+        leftCeilingDepth = leftCeilingCheck.point.y - TopLeftPosition.y; 
+
+        leftBottomWallDepth = leftBottomWallCheck.point.x - BottomLeftPosition.x;
+        leftTopWallDepth = leftTopWallCheck.point.x - TopLeftPosition.x;
+        rightBottomWallDepth = rightBottomWallCheck.point.x - BottomRightPosition.x;
+        rightTopWallDepth = rightTopWallCheck.point.x - TopRightPosition.x;
+
 
         CollisionsDoubleCheck();
 
@@ -289,16 +325,38 @@ public class Test : MonoBehaviour
 
     public void jumpOnJumpables()
     {
-        if (verticalSpeed < 0)
+        if (verticalSpeed < -0.1)
         {
             Debug.Log("Jumpable");
             verticalSpeed = bumperForce;
         }
     }
 
-    public void getHitBySomething()
+    public void getHitBySomething(Vector2 enemyPos2D)
     {
+        Debug.Log("Joueur touche Enemy");
+        Jump(verticalHitForce);
+        if (playerPos2D.x > enemyPos2D.x)
+        {
+            Debug.Log("Hit from the right");
+            DisableGameplay();
+            /*while (verticalSpeed > -0.1)
+            {
+                MoveRight();
+            }
+            while (groundCheck == false)
+            {
+                MoveRight();
+            }*/
+            EnableGameplay();
 
+        } 
+        else
+        {
+            Debug.Log("Hit from the left");
+            DisableGameplay();
+            EnableGameplay();
+        }
     }
 
     public void CollisionsDoubleCheck()
@@ -344,16 +402,53 @@ public class Test : MonoBehaviour
         {
             groundDepth = leftGroundDepth;
         }
-        if (groundDepth > -0.1 && verticalSpeed < 0)
+        if (groundDepth > - groundCheckDistance && verticalSpeed < 0)
         {
             depth = groundDepth;
-            AntiStuckExe();
+            VerticalAntiStuckExe();
         }
+        ceilingDepth = rightCeilingDepth;
+        if (leftCeilingDepth > ceilingDepth)
+        {
+            ceilingDepth = leftCeilingDepth;
+        }
+        if (ceilingDepth > groundCheckDistance && verticalSpeed > 0)
+        {
+            depth = ceilingDepth;
+            VerticalAntiStuckExe();
+        }
+
+        /*leftWallDepth = leftTopWallDepth;
+        if (leftBottomWallDepth > leftWallDepth)
+        {
+            leftWallDepth = leftBottomWallDepth;
+        }
+        if (leftWallDepth < - groundCheckDistance)
+        {
+            depth = leftWallDepth;
+            HorizontalAntiStuckExe();
+        }
+        rightWallDepth = rightTopWallDepth;
+        if (rightBottomWallDepth > rightWallDepth)
+        {
+            rightWallDepth = rightBottomWallDepth;
+        }
+        if (rightWallDepth > groundCheckDistance)
+        {
+            depth = rightWallDepth;
+            HorizontalAntiStuckExe();
+        }*/
+        Debug.Log(depth);
     }
 
-    public void AntiStuckExe()
+    public void VerticalAntiStuckExe()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y + groundCheckDistance + depth, transform.position.z);
+    }
+
+    public void HorizontalAntiStuckExe()
+    {
+        transform.position = new Vector3(transform.position.x + groundCheckDistance + depth, transform.position.y, transform.position.z);
     }
 
     public void Chaos()

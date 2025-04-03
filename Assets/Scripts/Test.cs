@@ -1,3 +1,4 @@
+using TMPro.Examples;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -65,6 +66,10 @@ public class Test : MonoBehaviour
     private float ceilingDepth;
     private float depth;
 
+    [Header("AntiStuck")]
+    private float BottomPosition;
+    private float groundCheckPoint;
+
     private bool groundCheck;
     private bool leftWallCheck;
     private bool rightWallCheck;
@@ -92,6 +97,10 @@ public class Test : MonoBehaviour
     void Update()
     {
         //Debug.Log($"verticalSpeed : {verticalSpeed}");
+        //Debug.Log($"rightGroundCheck.point.y: {rightGroundCheck.point.y}");
+        //Debug.Log($"BottomRightPosition.y: {BottomRightPosition.y}");
+        Debug.DrawRay(BottomRightPosition, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(BottomLeftPosition, Vector2.down * groundCheckDistance, Color.red);
 
         transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
         //transform.position += direction * horizontalSpeed * Time.deltaTime;
@@ -296,7 +305,7 @@ public class Test : MonoBehaviour
         TopRightPosition = TopRight.transform.position;
         BottomRightPosition = BottomRight.transform.position;
 
-        Debug.Log("RayCast");
+        //Debug.Log("RayCast");
 
         leftGroundCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.down, groundCheckDistance, terrain);
         rightGroundCheck = Physics2D.Raycast(BottomRightPosition, Vector2.down, groundCheckDistance, terrain);
@@ -307,15 +316,15 @@ public class Test : MonoBehaviour
         leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, groundCheckDistance, solidOnly);
         rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, groundCheckDistance, solidOnly);
 
-        rightGroundDepth = rightGroundCheck.point.y - BottomRightPosition.y;
-        leftGroundDepth = leftGroundCheck.point.y - BottomLeftPosition.y;
-        rightCeilingDepth = rightCeilingCheck.point.y - TopRightPosition.y;
-        leftCeilingDepth = leftCeilingCheck.point.y - TopLeftPosition.y; 
+        /*rightGroundDepth = BottomRightPosition.y - rightGroundCheck.point.y;
+        leftGroundDepth = BottomLeftPosition.y - leftGroundCheck.point.y;
+        //rightCeilingDepth = TopRightPosition.y - rightCeilingCheck.point.y;
+        //leftCeilingDepth = TopLeftPosition.y - leftCeilingCheck.point.y; 
 
         leftBottomWallDepth = leftBottomWallCheck.point.x - BottomLeftPosition.x;
         leftTopWallDepth = leftTopWallCheck.point.x - TopLeftPosition.x;
         rightBottomWallDepth = rightBottomWallCheck.point.x - BottomRightPosition.x;
-        rightTopWallDepth = rightTopWallCheck.point.x - TopRightPosition.x;
+        rightTopWallDepth = rightTopWallCheck.point.x - TopRightPosition.x;*/
 
 
         CollisionsDoubleCheck();
@@ -397,17 +406,41 @@ public class Test : MonoBehaviour
 
     public void AntiStuck()
     {
+        /*if (rightGroundCheck)
+        {
+            rightGroundDepth = groundCheckDistance - (BottomRightPosition.y - rightGroundCheck.point.y);
+            Debug.Log($"rightGroundDepth: {rightGroundDepth}");
+            VerticalAntiStuckExe(rightGroundDepth);
+        }*/
+        rightGroundDepth = groundCheckDistance - (BottomRightPosition.y - rightGroundCheck.point.y);
+        leftGroundDepth = groundCheckDistance - (BottomLeftPosition.y - leftGroundCheck.point.y);
+
         groundDepth = rightGroundDepth;
-        if (leftGroundDepth > groundDepth)
+
+        Debug.Log($"leftGroundDepth: {leftGroundDepth}");
+        Debug.Log($"rightGroundDepth: {rightGroundDepth}");
+
+        if (leftGroundDepth > rightGroundDepth)
         {
             groundDepth = leftGroundDepth;
         }
-        if (groundDepth > - groundCheckDistance && verticalSpeed < 0)
+
+        if (groundCheck)
         {
-            depth = groundDepth;
+            VerticalAntiStuckExe(groundDepth);
+        }
+
+        /*groundDepth = rightGroundDepth;
+        if (leftGroundDepth < groundDepth)
+        {
+            groundDepth = leftGroundDepth;
+        }
+        if (groundDepth < groundCheckDistance && verticalSpeed < 0)
+        {
+            depth = groundCheckDistance - groundDepth;
             VerticalAntiStuckExe();
         }
-        ceilingDepth = rightCeilingDepth;
+        /*ceilingDepth = rightCeilingDepth;
         if (leftCeilingDepth > ceilingDepth)
         {
             ceilingDepth = leftCeilingDepth;
@@ -418,7 +451,7 @@ public class Test : MonoBehaviour
             VerticalAntiStuckExe();
         }
 
-        /*leftWallDepth = leftTopWallDepth;
+        leftWallDepth = leftTopWallDepth;
         if (leftBottomWallDepth > leftWallDepth)
         {
             leftWallDepth = leftBottomWallDepth;
@@ -426,7 +459,7 @@ public class Test : MonoBehaviour
         if (leftWallDepth < - groundCheckDistance)
         {
             depth = leftWallDepth;
-            HorizontalAntiStuckExe();
+            //HorizontalAntiStuckExe();
         }
         rightWallDepth = rightTopWallDepth;
         if (rightBottomWallDepth > rightWallDepth)
@@ -436,14 +469,14 @@ public class Test : MonoBehaviour
         if (rightWallDepth > groundCheckDistance)
         {
             depth = rightWallDepth;
-            HorizontalAntiStuckExe();
-        }*/
-        Debug.Log(depth);
+            //HorizontalAntiStuckExe();
+        }
+        //Debug.Log(depth);*/
     }
 
-    public void VerticalAntiStuckExe()
+    public void VerticalAntiStuckExe(float groundDepth)
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + groundCheckDistance + depth, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + groundDepth, transform.position.z);
     }
 
     public void HorizontalAntiStuckExe()

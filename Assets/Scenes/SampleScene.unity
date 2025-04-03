@@ -3084,7 +3084,7 @@ Transform:
   m_GameObject: {fileID: 2047038535}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.76, y: -3.32, z: 0}
+  m_LocalPosition: {x: -14.23, y: -3, z: 0}
   m_LocalScale: {x: 0.7643, y: 0.5629581, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3127,7 +3127,7 @@ MonoBehaviour:
   BottomLeft: {fileID: 1952851518}
   TopRight: {fileID: 1140369492}
   BottomRight: {fileID: 1077651807}
-  groundCheckDistance: 0.1
+  groundCheckDistance: 0.2
   ceilingCheckDistance: 0.05
   wallCheckDistance: 0.1
   terrain:

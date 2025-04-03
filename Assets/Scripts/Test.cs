@@ -314,12 +314,12 @@ public class Test : MonoBehaviour
 
         leftGroundCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.down, groundCheckDistance, terrain);
         rightGroundCheck = Physics2D.Raycast(BottomRightPosition, Vector2.down, groundCheckDistance, terrain);
-        leftBottomWallCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.left, groundCheckDistance, solidOnly);
-        leftTopWallCheck = Physics2D.Raycast(TopLeftPosition, Vector2.left, groundCheckDistance, solidOnly);
-        rightBottomWallCheck = Physics2D.Raycast(BottomRightPosition, Vector2.right, groundCheckDistance, solidOnly);
-        rightTopWallCheck = Physics2D.Raycast(TopRightPosition, Vector2.right, groundCheckDistance, solidOnly);
-        leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, groundCheckDistance, solidOnly);
-        rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, groundCheckDistance, solidOnly);
+        leftBottomWallCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.left, wallCheckDistance, solidOnly);
+        leftTopWallCheck = Physics2D.Raycast(TopLeftPosition, Vector2.left, wallCheckDistance, solidOnly);
+        rightBottomWallCheck = Physics2D.Raycast(BottomRightPosition, Vector2.right, wallCheckDistance, solidOnly);
+        rightTopWallCheck = Physics2D.Raycast(TopRightPosition, Vector2.right, wallCheckDistance, solidOnly);
+        leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, ceilingCheckDistance, solidOnly);
+        rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, ceilingCheckDistance, solidOnly);
 
         Debug.DrawRay(BottomRightPosition, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(BottomLeftPosition, Vector2.down * groundCheckDistance, Color.red);
@@ -327,8 +327,8 @@ public class Test : MonoBehaviour
         Debug.DrawRay(TopRightPosition, Vector2.right * wallCheckDistance, Color.red);
         Debug.DrawRay(BottomLeftPosition, Vector2.left * wallCheckDistance, Color.red);
         Debug.DrawRay(TopLeftPosition, Vector2.left * wallCheckDistance, Color.red);
-        Debug.DrawRay(TopRightPosition, Vector2.up * groundCheckDistance, Color.red);
-        Debug.DrawRay(TopLeftPosition, Vector2.up * groundCheckDistance, Color.red);
+        Debug.DrawRay(TopRightPosition, Vector2.up * ceilingCheckDistance, Color.red);
+        Debug.DrawRay(TopLeftPosition, Vector2.up * ceilingCheckDistance, Color.red);
 
         /*rightGroundDepth = BottomRightPosition.y - rightGroundCheck.point.y;
         leftGroundDepth = BottomLeftPosition.y - leftGroundCheck.point.y;

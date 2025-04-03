@@ -69,6 +69,10 @@ public class Test : MonoBehaviour
     [Header("AntiStuck")]
     private float BottomPosition;
     private float groundCheckPoint;
+    private float topRightWallDepth;
+    private float bottomRightWallDepth;
+    private float topLeftWallDepth;
+    private float bottomLeftWallDepth;
 
     private bool groundCheck;
     private bool leftWallCheck;
@@ -77,6 +81,7 @@ public class Test : MonoBehaviour
 
     [Header("Collisions")]
     public float groundCheckDistance = 0.1f;
+    public float wallCheckDistance = 0.1f;
     public LayerMask terrain;
     public LayerMask solidOnly;
     public Collider2D feet;
@@ -99,8 +104,7 @@ public class Test : MonoBehaviour
         //Debug.Log($"verticalSpeed : {verticalSpeed}");
         //Debug.Log($"rightGroundCheck.point.y: {rightGroundCheck.point.y}");
         //Debug.Log($"BottomRightPosition.y: {BottomRightPosition.y}");
-        Debug.DrawRay(BottomRightPosition, Vector2.down * groundCheckDistance, Color.red);
-        Debug.DrawRay(BottomLeftPosition, Vector2.down * groundCheckDistance, Color.red);
+        
 
         transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
         //transform.position += direction * horizontalSpeed * Time.deltaTime;
@@ -316,6 +320,11 @@ public class Test : MonoBehaviour
         leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, groundCheckDistance, solidOnly);
         rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, groundCheckDistance, solidOnly);
 
+        Debug.DrawRay(BottomRightPosition, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(BottomLeftPosition, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(BottomRightPosition, Vector2.right * wallCheckDistance, Color.red);
+        Debug.DrawRay(TopRightPosition, Vector2.right * wallCheckDistance, Color.red);
+
         /*rightGroundDepth = BottomRightPosition.y - rightGroundCheck.point.y;
         leftGroundDepth = BottomLeftPosition.y - leftGroundCheck.point.y;
         //rightCeilingDepth = TopRightPosition.y - rightCeilingCheck.point.y;
@@ -406,19 +415,19 @@ public class Test : MonoBehaviour
 
     public void AntiStuck()
     {
-        /*if (rightGroundCheck)
-        {
-            rightGroundDepth = groundCheckDistance - (BottomRightPosition.y - rightGroundCheck.point.y);
-            Debug.Log($"rightGroundDepth: {rightGroundDepth}");
-            VerticalAntiStuckExe(rightGroundDepth);
-        }*/
+        GroundAntiStuck();
+        RightWallAntiStuck();
+    }
+
+    public void GroundAntiStuck()
+    {
         rightGroundDepth = groundCheckDistance - (BottomRightPosition.y - rightGroundCheck.point.y);
         leftGroundDepth = groundCheckDistance - (BottomLeftPosition.y - leftGroundCheck.point.y);
 
         groundDepth = rightGroundDepth;
 
-        Debug.Log($"leftGroundDepth: {leftGroundDepth}");
-        Debug.Log($"rightGroundDepth: {rightGroundDepth}");
+        //Debug.Log($"leftGroundDepth: {leftGroundDepth}");
+        //Debug.Log($"rightGroundDepth: {rightGroundDepth}");
 
         if (leftGroundDepth > rightGroundDepth)
         {
@@ -429,59 +438,38 @@ public class Test : MonoBehaviour
         {
             VerticalAntiStuckExe(groundDepth);
         }
-
-        /*groundDepth = rightGroundDepth;
-        if (leftGroundDepth < groundDepth)
-        {
-            groundDepth = leftGroundDepth;
-        }
-        if (groundDepth < groundCheckDistance && verticalSpeed < 0)
-        {
-            depth = groundCheckDistance - groundDepth;
-            VerticalAntiStuckExe();
-        }
-        /*ceilingDepth = rightCeilingDepth;
-        if (leftCeilingDepth > ceilingDepth)
-        {
-            ceilingDepth = leftCeilingDepth;
-        }
-        if (ceilingDepth > groundCheckDistance && verticalSpeed > 0)
-        {
-            depth = ceilingDepth;
-            VerticalAntiStuckExe();
-        }
-
-        leftWallDepth = leftTopWallDepth;
-        if (leftBottomWallDepth > leftWallDepth)
-        {
-            leftWallDepth = leftBottomWallDepth;
-        }
-        if (leftWallDepth < - groundCheckDistance)
-        {
-            depth = leftWallDepth;
-            //HorizontalAntiStuckExe();
-        }
-        rightWallDepth = rightTopWallDepth;
-        if (rightBottomWallDepth > rightWallDepth)
-        {
-            rightWallDepth = rightBottomWallDepth;
-        }
-        if (rightWallDepth > groundCheckDistance)
-        {
-            depth = rightWallDepth;
-            //HorizontalAntiStuckExe();
-        }
-        //Debug.Log(depth);*/
     }
 
-    public void VerticalAntiStuckExe(float groundDepth)
+    public void RightWallAntiStuck()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + groundDepth, transform.position.z);
+        topRightWallDepth = - wallCheckDistance - (TopRightPosition.x - rightTopWallCheck.point.x);
+        bottomRightWallDepth = - wallCheckDistance - (BottomRightPosition.x - rightBottomWallCheck.point.x);
+
+        rightWallDepth = bottomRightWallDepth;
+
+        //Debug.Log($"leftGroundDepth: {leftGroundDepth}");
+        //Debug.Log($"rightGroundDepth: {rightGroundDepth}");
+
+        if (topRightWallDepth > bottomRightWallDepth)
+        {
+            rightWallDepth = topRightWallDepth;
+        }
+
+        if (rightWallCheck)
+        {
+            //Debug.Log($"rightWallDepth: {rightWallDepth}");
+            HorizontalAntiStuckExe(rightWallDepth);
+        }
     }
 
-    public void HorizontalAntiStuckExe()
+    public void VerticalAntiStuckExe(float verticalDepth)
     {
-        transform.position = new Vector3(transform.position.x + groundCheckDistance + depth, transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + verticalDepth, transform.position.z);
+    }
+
+    public void HorizontalAntiStuckExe(float horizontalDepth)
+    {
+        transform.position = new Vector3(transform.position.x + horizontalDepth, transform.position.y, transform.position.z);
     }
 
     public void Chaos()

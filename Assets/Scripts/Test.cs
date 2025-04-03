@@ -81,6 +81,7 @@ public class Test : MonoBehaviour
 
     [Header("Collisions")]
     public float groundCheckDistance = 0.1f;
+    public float ceilingCheckDistance = 0.05f;
     public float wallCheckDistance = 0.1f;
     public LayerMask terrain;
     public LayerMask solidOnly;
@@ -148,7 +149,7 @@ public class Test : MonoBehaviour
     {
         Debug.Log("isFalling");
 
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && verticalSpeed > 0)
         {
             verticalSpeed -= lowerGravityForce * Time.deltaTime;
         }
@@ -326,6 +327,8 @@ public class Test : MonoBehaviour
         Debug.DrawRay(TopRightPosition, Vector2.right * wallCheckDistance, Color.red);
         Debug.DrawRay(BottomLeftPosition, Vector2.left * wallCheckDistance, Color.red);
         Debug.DrawRay(TopLeftPosition, Vector2.left * wallCheckDistance, Color.red);
+        Debug.DrawRay(TopRightPosition, Vector2.up * groundCheckDistance, Color.red);
+        Debug.DrawRay(TopLeftPosition, Vector2.up * groundCheckDistance, Color.red);
 
         /*rightGroundDepth = BottomRightPosition.y - rightGroundCheck.point.y;
         leftGroundDepth = BottomLeftPosition.y - leftGroundCheck.point.y;
@@ -418,8 +421,9 @@ public class Test : MonoBehaviour
     public void AntiStuck()
     {
         GroundAntiStuck();
-        //RightWallAntiStuck();
-        //LeftWallAntiStuck();
+        RightWallAntiStuck();
+        LeftWallAntiStuck();
+        CeilingAntiStuck();
     }
 
     public void GroundAntiStuck()
@@ -430,9 +434,6 @@ public class Test : MonoBehaviour
         leftGroundDepth = groundCheckDistance - leftGroundCheck.distance;
         Debug.Log($"leftGroundCheck.distance: {leftGroundCheck.distance}");
 
-        /*rightGroundDepth = groundCheckDistance - (BottomRightPosition.y - rightGroundCheck.point.y);
-        leftGroundDepth = groundCheckDistance - (BottomLeftPosition.y - leftGroundCheck.point.y);*/
-
         if (rightGroundCheck)
         {
             groundDepth = rightGroundDepth;
@@ -442,48 +443,76 @@ public class Test : MonoBehaviour
             groundDepth = leftGroundDepth;
         }
         
-        if (groundCheck)
+        if (groundCheck && verticalSpeed < 0)
         {
             VerticalAntiStuckExe(groundDepth);
         }
     }
 
-    /*public void RightWallAntiStuck()
+    public void RightWallAntiStuck()
     {
-        topRightWallDepth = - wallCheckDistance - (TopRightPosition.x - rightTopWallCheck.point.x);
-        bottomRightWallDepth = - wallCheckDistance - (BottomRightPosition.x - rightBottomWallCheck.point.x);
+        topRightWallDepth = - (wallCheckDistance - rightTopWallCheck.distance);
+        bottomRightWallDepth = - (wallCheckDistance - rightBottomWallCheck.distance);
 
-        rightWallDepth = bottomRightWallDepth;
-
-        if (topRightWallDepth > bottomRightWallDepth)
+        if (rightTopWallCheck)
         {
             rightWallDepth = topRightWallDepth;
+        }
+        else if (rightBottomWallCheck)
+        {
+            rightWallDepth = bottomRightWallDepth;
         }
 
         if (rightWallCheck)
         {
             //Debug.Log($"rightWallDepth: {rightWallDepth}");
-            HorizontalAntiStuckExe(rightWallDepth);
+            HorizontalAntiStuckExe(rightWallDepth / 2);
         }
     }
     public void LeftWallAntiStuck()
     {
-        topLeftWallDepth = wallCheckDistance - (TopLeftPosition.x - leftTopWallCheck.point.x);
-        bottomLeftWallDepth = wallCheckDistance - (BottomLeftPosition.x - leftBottomWallCheck.point.x);
+        topLeftWallDepth = wallCheckDistance - leftTopWallCheck.distance;
+        bottomLeftWallDepth = wallCheckDistance - leftBottomWallCheck.distance;
 
-        leftWallDepth = bottomLeftWallDepth;
-
-        if (topLeftWallDepth > bottomLeftWallDepth)
+        if (leftTopWallCheck)
         {
             leftWallDepth = topLeftWallDepth;
+        }
+        else if (leftBottomWallCheck)
+        {
+            leftWallDepth = bottomLeftWallDepth;
         }
 
         if (leftWallCheck)
         {
-            Debug.Log($"leftWallDepth: {leftWallDepth}");
-            HorizontalAntiStuckExe(leftWallDepth);
+            //Debug.Log($"leftWallDepth: {leftWallDepth}");
+            HorizontalAntiStuckExe(leftWallDepth / 2);
         }
-    }*/
+    }
+
+    public void CeilingAntiStuck()
+    {
+        rightCeilingDepth = - (ceilingCheckDistance - rightCeilingCheck.distance);
+        Debug.Log($"rightCeilingCheck.distance: {rightCeilingCheck.distance}");
+
+        leftCeilingDepth = - (ceilingCheckDistance - leftCeilingCheck.distance);
+        Debug.Log($"leftCeilingCheck.distance: {leftCeilingCheck.distance}");
+
+        if (rightCeilingCheck)
+        {
+            ceilingDepth = rightCeilingDepth;
+        }
+        else if (leftCeilingCheck)
+        {
+            ceilingDepth = leftCeilingDepth;
+        }
+
+        if (ceilingCheck && verticalSpeed > 0)
+        {
+            verticalSpeed = 0;
+            VerticalAntiStuckExe(ceilingDepth);
+        }
+    }
 
     public void VerticalAntiStuckExe(float verticalDepth)
     {

@@ -52,6 +52,9 @@ public class Test : MonoBehaviour
     public RaycastHit2D leftCeilingCheck;
     public RaycastHit2D rightCeilingCheck;
 
+    public RaycastHit2D lateJumpLeftGroundCheck;
+    public RaycastHit2D lateJumpRightGroundCheck;
+
     private float leftGroundDepth;
     private float rightGroundDepth;
     private float groundDepth;
@@ -92,6 +95,9 @@ public class Test : MonoBehaviour
     public float verticalHitForce;
     public float horizontalHitForce;
     private Vector2 playerPos2D;
+
+    private bool lateJump;
+    public float lateJumpDistance;
 
     void Start()
     {
@@ -141,6 +147,7 @@ public class Test : MonoBehaviour
     }
     public void Jump(float force)
     {
+        lateJump = false;
         verticalSpeed = force;
         jumpCount -= 1;
     }
@@ -180,12 +187,19 @@ public class Test : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) || lateJump)
         {
             if (jumpCount > 0)
             {
                 Jump(jumpForce);
             }
+        }
+
+        Debug.Log($"lateJumpRightGroundCheck.distance: {lateJumpRightGroundCheck.distance}");
+
+        if (Input.GetKeyDown(KeyCode.X) && (lateJumpLeftGroundCheck || lateJumpRightGroundCheck) && verticalSpeed < 0)
+        {
+            lateJump = true;
         }
     }
 
@@ -321,6 +335,9 @@ public class Test : MonoBehaviour
         leftCeilingCheck = Physics2D.Raycast(TopLeftPosition, Vector2.up, ceilingCheckDistance, solidOnly);
         rightCeilingCheck = Physics2D.Raycast(TopRightPosition, Vector2.up, ceilingCheckDistance, solidOnly);
 
+        lateJumpLeftGroundCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.down, lateJumpDistance, terrain);
+        lateJumpRightGroundCheck = Physics2D.Raycast(BottomRightPosition, Vector2.down, lateJumpDistance, terrain);
+
         Debug.DrawRay(BottomRightPosition, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(BottomLeftPosition, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(BottomRightPosition, Vector2.right * wallCheckDistance, Color.red);
@@ -329,6 +346,9 @@ public class Test : MonoBehaviour
         Debug.DrawRay(TopLeftPosition, Vector2.left * wallCheckDistance, Color.red);
         Debug.DrawRay(TopRightPosition, Vector2.up * ceilingCheckDistance, Color.red);
         Debug.DrawRay(TopLeftPosition, Vector2.up * ceilingCheckDistance, Color.red);
+
+        Debug.DrawRay(BottomRightPosition, Vector2.down * lateJumpDistance, Color.blue);
+        Debug.DrawRay(BottomLeftPosition, Vector2.down * lateJumpDistance, Color.blue);
 
         /*rightGroundDepth = BottomRightPosition.y - rightGroundCheck.point.y;
         leftGroundDepth = BottomLeftPosition.y - leftGroundCheck.point.y;
@@ -429,10 +449,10 @@ public class Test : MonoBehaviour
     public void GroundAntiStuck()
     {
         rightGroundDepth = groundCheckDistance - rightGroundCheck.distance;
-        Debug.Log($"rightGroundCheck.distance: {rightGroundCheck.distance}");
+        //Debug.Log($"rightGroundCheck.distance: {rightGroundCheck.distance}");
 
         leftGroundDepth = groundCheckDistance - leftGroundCheck.distance;
-        Debug.Log($"leftGroundCheck.distance: {leftGroundCheck.distance}");
+        //Debug.Log($"leftGroundCheck.distance: {leftGroundCheck.distance}");
 
         if (rightGroundCheck)
         {
@@ -493,10 +513,10 @@ public class Test : MonoBehaviour
     public void CeilingAntiStuck()
     {
         rightCeilingDepth = - (ceilingCheckDistance - rightCeilingCheck.distance);
-        Debug.Log($"rightCeilingCheck.distance: {rightCeilingCheck.distance}");
+        //Debug.Log($"rightCeilingCheck.distance: {rightCeilingCheck.distance}");
 
         leftCeilingDepth = - (ceilingCheckDistance - leftCeilingCheck.distance);
-        Debug.Log($"leftCeilingCheck.distance: {leftCeilingCheck.distance}");
+        //Debug.Log($"leftCeilingCheck.distance: {leftCeilingCheck.distance}");
 
         if (rightCeilingCheck)
         {

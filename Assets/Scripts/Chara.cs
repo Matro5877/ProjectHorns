@@ -170,12 +170,14 @@ public class Chara : MonoBehaviour
             {
                 verticalSpeed = 0;
                 ResetJumpCount();
+
+                if (hasToStopWhenTouchingGround)
+                {
+                    horizontalSpeed = 0;
+                    hasToStopWhenTouchingGround = false;
+                }
             }
-            if (hasToStopWhenTouchingGround)
-            {
-                horizontalSpeed = 0;
-                hasToStopWhenTouchingGround = false;
-            }
+            
         }
 
         if (Input.GetKeyDown(KeyCode.X) || lateJump)
@@ -195,13 +197,14 @@ public class Chara : MonoBehaviour
     public void Jump(float force)
     {
         lateJump = false;
+        horizontalSpeed = horizontalSpeed / 1.5f;
         verticalSpeed = force;
         jumpCount -= 1;
     }
 
     public void Fall()
     {
-        Debug.Log("isFalling");
+        //Debug.Log("isFalling");
 
         if (Input.GetKey(KeyCode.X) && verticalSpeed > 0)
         {
@@ -241,8 +244,9 @@ public class Chara : MonoBehaviour
         else if ((Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)) && groundCheck)
         {
         //Maybe need to add support for when Walking and Sneaking
-            horizontalSpeed -= walkingSpeed * direction.x;
+            //horizontalSpeed -= walkingSpeed * direction.x;
             //horizontalSpeed -= horizontalSpeed;
+            horizontalSpeed = 0;
         }
     }
 
@@ -285,10 +289,25 @@ public class Chara : MonoBehaviour
         }
         else
         {
-            if ((- maxAerialSpeed < horizontalSpeed) && (horizontalSpeed < maxAerialSpeed))
+            horizontalSpeed += aerialSpeed * movingDirection.x * Time.deltaTime;
+
+            if (horizontalSpeed > maxAerialSpeed)
+            {
+                horizontalSpeed = maxAerialSpeed;
+            }
+            if (horizontalSpeed < - maxAerialSpeed)
+            {
+                horizontalSpeed = - maxAerialSpeed;
+            }
+            
+            /*if ((- maxAerialSpeed < horizontalSpeed) && (horizontalSpeed < maxAerialSpeed))
             {
             horizontalSpeed += aerialSpeed * movingDirection.x * Time.deltaTime;
             }
+            else
+            {
+                horizontalSpeed -= aerialSpeed * movingDirection.x * Time.deltaTime;
+            }*/
         }
         
     }
@@ -365,6 +384,9 @@ public class Chara : MonoBehaviour
         lateJumpLeftGroundCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.down, lateJumpDistance, terrain);
         lateJumpRightGroundCheck = Physics2D.Raycast(BottomRightPosition, Vector2.down, lateJumpDistance, terrain);
 
+        Debug.DrawRay(BottomRightPosition, Vector2.down * lateJumpDistance, Color.blue);
+        Debug.DrawRay(BottomLeftPosition, Vector2.down * lateJumpDistance, Color.blue);
+
         Debug.DrawRay(BottomRightPosition, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(BottomLeftPosition, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(BottomRightPosition, Vector2.right * wallCheckDistance, Color.red);
@@ -373,9 +395,6 @@ public class Chara : MonoBehaviour
         Debug.DrawRay(TopLeftPosition, Vector2.left * wallCheckDistance, Color.red);
         Debug.DrawRay(TopRightPosition, Vector2.up * ceilingCheckDistance, Color.red);
         Debug.DrawRay(TopLeftPosition, Vector2.up * ceilingCheckDistance, Color.red);
-
-        Debug.DrawRay(BottomRightPosition, Vector2.down * lateJumpDistance, Color.blue);
-        Debug.DrawRay(BottomLeftPosition, Vector2.down * lateJumpDistance, Color.blue);
 
         /*rightGroundDepth = BottomRightPosition.y - rightGroundCheck.point.y;
         leftGroundDepth = BottomLeftPosition.y - leftGroundCheck.point.y;
@@ -404,8 +423,6 @@ public class Chara : MonoBehaviour
 
     public void getHitBySomething(Vector2 enemyPos2D)
     {
-        //Need to fix side projection not working when pressing opposing direction key and need to stop speed when touching ground (maybe slowly)
-
         Debug.Log("Joueur touche Enemy");
         Jump(verticalHitForce);
         if (playerPos2D.x > enemyPos2D.x)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BouncerThing : MonoBehaviour
 {
 
-    public Test chara;
+    public Chara chara;
 
     public void OnTriggerEnter2D(Collider2D collider)
     {

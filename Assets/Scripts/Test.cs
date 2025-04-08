@@ -52,6 +52,8 @@ public class Test : MonoBehaviour
     public RaycastHit2D leftCeilingCheck;
     public RaycastHit2D rightCeilingCheck;
 
+    public float wallOffset;
+
     public RaycastHit2D lateJumpLeftGroundCheck;
     public RaycastHit2D lateJumpRightGroundCheck;
 
@@ -99,6 +101,10 @@ public class Test : MonoBehaviour
     private bool lateJump;
     public float lateJumpDistance;
 
+    [Header("Animation")]
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
+
     void Start()
     {
         originalScale = transform.localScale.x;
@@ -119,6 +125,7 @@ public class Test : MonoBehaviour
 
         RayCastTest();
         Gameplay();
+        CharaAnimation();
     }
 
     public void Gameplay()
@@ -223,6 +230,8 @@ public class Test : MonoBehaviour
         }
         else
         {
+            animator.SetBool("anim_isWalking", false);
+            animator.SetBool("anim_isSprinting", false);
             horizontalSpeed = 0;
         }
     }
@@ -249,11 +258,15 @@ public class Test : MonoBehaviour
     {
         if (isSprinting)
         {
+            animator.SetBool("anim_isWalking", false);
+            animator.SetBool("anim_isSprinting", true);
             transform.position += direction * sprintingSpeed * Time.deltaTime;
             //horizontalSpeed += sprintingSpeed * Time.deltaTime;
         }
         else
         {
+            animator.SetBool("anim_isWalking", true);
+            animator.SetBool("anim_isSprinting", false);
             transform.position += direction * walkingSpeed * Time.deltaTime;
             //horizontalSpeed += walkingSpeed * Time.deltaTime;
         }
@@ -319,10 +332,14 @@ public class Test : MonoBehaviour
 
     public void RayCastTest()
     {
-        TopLeftPosition = TopLeft.transform.position;
-        BottomLeftPosition = BottomLeft.transform.position;
-        TopRightPosition = TopRight.transform.position;
-        BottomRightPosition = BottomRight.transform.position;
+        //TopLeftPosition = TopLeft.transform.position;
+        TopLeftPosition = new Vector2(TopLeft.transform.position.x + groundCheckDistance + wallOffset, TopLeft.transform.position.y - ceilingCheckDistance);
+        //BottomLeftPosition = BottomLeft.transform.position
+        BottomLeftPosition = new Vector2(BottomLeft.transform.position.x + groundCheckDistance + wallOffset, BottomLeft.transform.position.y + groundCheckDistance);
+        //TopRightPosition = TopRight.transform.position;
+        TopRightPosition = new Vector2(TopRight.transform.position.x - groundCheckDistance - wallOffset, TopRight.transform.position.y - ceilingCheckDistance);
+        //BottomRightPosition = BottomRight.transform.position;
+        BottomRightPosition = new Vector2(BottomRight.transform.position.x - groundCheckDistance - wallOffset, BottomLeft.transform.position.y + groundCheckDistance);
 
         //Debug.Log("RayCast");
 
@@ -550,5 +567,11 @@ public class Test : MonoBehaviour
         {
             Debug.Log("CHAOS");
         }
+    }
+
+    public void CharaAnimation()
+    {
+        animator.SetBool("anim_groundCheck", groundCheck && verticalSpeed <= 0);
+        spriteRenderer.flipX = direction.x < 0;
     }
 }

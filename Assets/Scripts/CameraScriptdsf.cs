@@ -17,7 +17,7 @@ public class CameraScriptsdsf : MonoBehaviour
     void Start()
     {
         cameraMode = "fullCharacter";
-        cameraMode = "xCharacter";
+        //cameraMode = "xCharacter";
         //cameraMode = "yCharacter";
     }
 

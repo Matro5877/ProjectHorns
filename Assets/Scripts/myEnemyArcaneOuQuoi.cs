@@ -5,7 +5,7 @@ using UnityEngine;
 public class myEnemyArcaneOuQuoi : MonoBehaviour
 {
 
-    public Test chara;
+    public Chara chara;
     public Vector2 enemyPos2D;
 
     public void OnTriggerEnter2D(Collider2D collider)

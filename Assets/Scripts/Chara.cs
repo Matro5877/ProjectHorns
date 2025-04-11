@@ -3,24 +3,33 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Test : MonoBehaviour
+public class Chara : MonoBehaviour
 {
-    [Header("Physique")]
+    [Header("Paramètres Physique")]
     public float walkingSpeed;
     public float sprintingSpeed;
+    public float sneakingSpeed;
+    public float aerialSpeed;
+    public float maxAerialSpeed;
     public float maxFallingSpeed;
     public float gravityForce;
     public float lowerGravityForce;
     public float jumpForce;
     public float bumperForce;
-    public float antiStuckSpeed;
+    
 
+    [Header("Physique")]
     private float verticalSpeed;
     private float horizontalSpeed;
     private Vector3 direction;
     private Vector3 visibleDirection;
     public int maxJumps;
     private int jumpCount;
+    private Vector2 playerPos2D;
+    private bool hasToStopWhenTouchingGround;
+    private bool lateJump;
+    public float lateJumpDistance;
+
 
     [Header("Autorisations")]
     public bool canMoveRight;
@@ -28,8 +37,12 @@ public class Test : MonoBehaviour
     public bool canJump;
     public bool canCharge;
     private bool isSprinting;
+    private bool isWalking;
+    private bool isSneaking;
     public bool canSprint;
     public bool canStopSprinting;
+    public bool canBumper;
+    public bool canGetHit;
 
     [Header("Corners")]
     public GameObject TopLeft;
@@ -51,12 +64,11 @@ public class Test : MonoBehaviour
     public RaycastHit2D rightTopWallCheck;
     public RaycastHit2D leftCeilingCheck;
     public RaycastHit2D rightCeilingCheck;
-
-    public float wallOffset; 
-
     public RaycastHit2D lateJumpLeftGroundCheck;
     public RaycastHit2D lateJumpRightGroundCheck;
 
+
+    [Header("Profondeurs RayCasts")]
     private float leftGroundDepth;
     private float rightGroundDepth;
     private float groundDepth;
@@ -71,9 +83,7 @@ public class Test : MonoBehaviour
     private float ceilingDepth;
     private float depth;
 
-    [Header("AntiStuck")]
-    private float BottomPosition;
-    private float groundCheckPoint;
+    [Header("Raccourçis RayCasts")]
     private float topRightWallDepth;
     private float bottomRightWallDepth;
     private float topLeftWallDepth;
@@ -84,30 +94,24 @@ public class Test : MonoBehaviour
     private bool rightWallCheck;
     private bool ceilingCheck;
 
-    [Header("Collisions")]
+    [Header("Paramètres Collisions")]
     public float groundCheckDistance = 0.1f;
     public float ceilingCheckDistance = 0.05f;
     public float wallCheckDistance = 0.1f;
+
+    [Header("Collisions")]
     public LayerMask terrain;
     public LayerMask solidOnly;
     public Collider2D feet;
     public Collider2D core;
-    private float originalScale;
 
+    [Header("Collisions")]
     public float verticalHitForce;
     public float horizontalHitForce;
-    private Vector2 playerPos2D;
-
-    private bool lateJump;
-    public float lateJumpDistance;
-
-    [Header("Animation")]
-    public Animator animator;
-    public SpriteRenderer spriteRenderer;
+    
 
     void Start()
     {
-        originalScale = transform.localScale.x;
         verticalSpeed = 0;
         EnableGameplay();
     }
@@ -117,28 +121,28 @@ public class Test : MonoBehaviour
         //Debug.Log($"verticalSpeed : {verticalSpeed}");
         //Debug.Log($"rightGroundCheck.point.y: {rightGroundCheck.point.y}");
         //Debug.Log($"BottomRightPosition.y: {BottomRightPosition.y}");
-        
+        Debug.Log($"horizontalSpeed: {horizontalSpeed}");
 
         transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
-        //transform.position += direction * horizontalSpeed * Time.deltaTime;
+        transform.position += Vector3.right * horizontalSpeed * Time.deltaTime;
+
+        //Used to have the 2D coordinates of the Character.
         playerPos2D = new Vector2(transform.position.x, transform.position.y);
 
-        RayCastTest();
         Gameplay();
-        CharaAnimation();
     }
 
     public void Gameplay()
     {
+        RayCastTest();
+        
         isSprintingVerif();
 
         isMoving();
 
-        JumpFallMess();
+        JumpFallController();
 
         CeilingThing();
-
-        AntiStuck();
 
         //Chaos();
     }
@@ -152,33 +156,8 @@ public class Test : MonoBehaviour
     {
         jumpCount = maxJumps;
     }
-    public void Jump(float force)
-    {
-        lateJump = false;
-        verticalSpeed = force;
-        jumpCount -= 1;
-    }
 
-    public void Fall()
-    {
-        Debug.Log("isFalling");
-
-        if (Input.GetKey(KeyCode.X) && verticalSpeed > 0)
-        {
-            verticalSpeed -= lowerGravityForce * Time.deltaTime;
-        }
-        else
-        {
-            verticalSpeed -= gravityForce * Time.deltaTime;
-        }
-        
-        if (verticalSpeed < maxFallingSpeed)
-        {
-            verticalSpeed = maxFallingSpeed;
-        }
-    }
-
-    public void JumpFallMess()
+    public void JumpFallController()
     {
         if (groundCheck == false)
         {
@@ -191,7 +170,14 @@ public class Test : MonoBehaviour
             {
                 verticalSpeed = 0;
                 ResetJumpCount();
+
+                if (hasToStopWhenTouchingGround)
+                {
+                    horizontalSpeed = 0;
+                    hasToStopWhenTouchingGround = false;
+                }
             }
+            
         }
 
         if (Input.GetKeyDown(KeyCode.X) || lateJump)
@@ -202,11 +188,38 @@ public class Test : MonoBehaviour
             }
         }
 
-        Debug.Log($"lateJumpRightGroundCheck.distance: {lateJumpRightGroundCheck.distance}");
-
         if (Input.GetKeyDown(KeyCode.X) && (lateJumpLeftGroundCheck || lateJumpRightGroundCheck) && verticalSpeed < 0)
         {
             lateJump = true;
+        }
+    }
+    
+    public void Jump(float force)
+    {
+        lateJump = false;
+        horizontalSpeed = horizontalSpeed / 1.5f;
+        verticalSpeed = force;
+        jumpCount -= 1;
+    }
+
+    public void Fall()
+    {
+        //Debug.Log("isFalling");
+
+        if (Input.GetKey(KeyCode.X) && verticalSpeed > 0)
+        {
+            verticalSpeed -= lowerGravityForce * Time.deltaTime;
+            hasToStopWhenTouchingGround = true;
+        }
+        else
+        {
+            verticalSpeed -= gravityForce * Time.deltaTime;
+            hasToStopWhenTouchingGround = true;
+        }
+        
+        if (verticalSpeed < maxFallingSpeed)
+        {
+            verticalSpeed = maxFallingSpeed;
         }
     }
 
@@ -228,48 +241,75 @@ public class Test : MonoBehaviour
                 MoveLeft();
             }
         }
-        else
+        else if ((Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)) && groundCheck)
         {
-            animator.SetBool("anim_isWalking", false);
-            animator.SetBool("anim_isSprinting", false);
+        //Maybe need to add support for when Walking and Sneaking
+            //horizontalSpeed -= walkingSpeed * direction.x;
+            //horizontalSpeed -= horizontalSpeed;
             horizontalSpeed = 0;
         }
     }
 
     private void MoveRight()
     {
-        direction = Vector3.right;
+        direction = Vector2.right;
         if (rightWallCheck == false)
         {
-            Move();
+            Move(direction);
         }
     }
 
     private void MoveLeft()
     {
-        direction = Vector3.left;
+        direction = Vector2.left;
         if (leftWallCheck == false)
         {
-            Move();
+            Move(direction);
         }
     }
 
-    private void Move()
+    private void Move(Vector2 movingDirection)
     {
-        if (isSprinting)
+        if (groundCheck)
         {
-            animator.SetBool("anim_isWalking", false);
-            animator.SetBool("anim_isSprinting", true);
-            transform.position += direction * sprintingSpeed * Time.deltaTime;
-            //horizontalSpeed += sprintingSpeed * Time.deltaTime;
+            if (isSprinting)
+            {
+                //transform.position += movingDirection * sprintingSpeed * Time.deltaTime;
+                horizontalSpeed = sprintingSpeed * movingDirection.x;
+            }
+            else if (isWalking)
+            {
+                //transform.position += movingDirection * walkingSpeed * Time.deltaTime;
+                horizontalSpeed = walkingSpeed * movingDirection.x;
+            }
+            else if (isSneaking)
+            {
+                horizontalSpeed = sneakingSpeed * movingDirection.x;
+            }
         }
         else
         {
-            animator.SetBool("anim_isWalking", true);
-            animator.SetBool("anim_isSprinting", false);
-            transform.position += direction * walkingSpeed * Time.deltaTime;
-            //horizontalSpeed += walkingSpeed * Time.deltaTime;
+            horizontalSpeed += aerialSpeed * movingDirection.x * Time.deltaTime;
+
+            if (horizontalSpeed > maxAerialSpeed)
+            {
+                horizontalSpeed = maxAerialSpeed;
+            }
+            if (horizontalSpeed < - maxAerialSpeed)
+            {
+                horizontalSpeed = - maxAerialSpeed;
+            }
+            
+            /*if ((- maxAerialSpeed < horizontalSpeed) && (horizontalSpeed < maxAerialSpeed))
+            {
+            horizontalSpeed += aerialSpeed * movingDirection.x * Time.deltaTime;
+            }
+            else
+            {
+                horizontalSpeed -= aerialSpeed * movingDirection.x * Time.deltaTime;
+            }*/
         }
+        
     }
 
     private void CeilingThing()
@@ -282,32 +322,25 @@ public class Test : MonoBehaviour
 
     public void isSprintingVerif()
     {
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.C) && canSprint)
         {
-            if (canSprint)
-            {
-                isSprinting = true;
-            }
+            isSprinting = true;
+            isWalking = false;
+            isSneaking = false;
         }
         else
         {
             if (canStopSprinting)
             {
                 isSprinting = false;
+                isWalking = true;
             }
         }
     }
 
     public void VisibleDirection()
     {
-        if (visibleDirection == Vector3.right)
-        {
-            transform.localScale = new Vector3(-originalScale, transform.localScale.y, transform.localScale.z);
-        }
-        if (visibleDirection == Vector3.left)
-        {
-            transform.localScale = new Vector3(originalScale, transform.localScale.y, transform.localScale.z);
-        }
+
     }
 
     public void DisableGameplay()
@@ -332,14 +365,10 @@ public class Test : MonoBehaviour
 
     public void RayCastTest()
     {
-        //TopLeftPosition = TopLeft.transform.position;
-        TopLeftPosition = new Vector2(TopLeft.transform.position.x + groundCheckDistance + wallOffset, TopLeft.transform.position.y - ceilingCheckDistance);
-        //BottomLeftPosition = BottomLeft.transform.position
-        BottomLeftPosition = new Vector2(BottomLeft.transform.position.x + groundCheckDistance + wallOffset, BottomLeft.transform.position.y + groundCheckDistance);
-        //TopRightPosition = TopRight.transform.position;
-        TopRightPosition = new Vector2(TopRight.transform.position.x - groundCheckDistance - wallOffset, TopRight.transform.position.y - ceilingCheckDistance);
-        //BottomRightPosition = BottomRight.transform.position;
-        BottomRightPosition = new Vector2(BottomRight.transform.position.x - groundCheckDistance - wallOffset, BottomLeft.transform.position.y + groundCheckDistance);
+        TopLeftPosition = TopLeft.transform.position;
+        BottomLeftPosition = BottomLeft.transform.position;
+        TopRightPosition = TopRight.transform.position;
+        BottomRightPosition = BottomRight.transform.position;
 
         //Debug.Log("RayCast");
 
@@ -355,6 +384,9 @@ public class Test : MonoBehaviour
         lateJumpLeftGroundCheck = Physics2D.Raycast(BottomLeftPosition, Vector2.down, lateJumpDistance, terrain);
         lateJumpRightGroundCheck = Physics2D.Raycast(BottomRightPosition, Vector2.down, lateJumpDistance, terrain);
 
+        Debug.DrawRay(BottomRightPosition, Vector2.down * lateJumpDistance, Color.blue);
+        Debug.DrawRay(BottomLeftPosition, Vector2.down * lateJumpDistance, Color.blue);
+
         Debug.DrawRay(BottomRightPosition, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(BottomLeftPosition, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(BottomRightPosition, Vector2.right * wallCheckDistance, Color.red);
@@ -363,9 +395,6 @@ public class Test : MonoBehaviour
         Debug.DrawRay(TopLeftPosition, Vector2.left * wallCheckDistance, Color.red);
         Debug.DrawRay(TopRightPosition, Vector2.up * ceilingCheckDistance, Color.red);
         Debug.DrawRay(TopLeftPosition, Vector2.up * ceilingCheckDistance, Color.red);
-
-        Debug.DrawRay(BottomRightPosition, Vector2.down * lateJumpDistance, Color.blue);
-        Debug.DrawRay(BottomLeftPosition, Vector2.down * lateJumpDistance, Color.blue);
 
         /*rightGroundDepth = BottomRightPosition.y - rightGroundCheck.point.y;
         leftGroundDepth = BottomLeftPosition.y - leftGroundCheck.point.y;
@@ -400,14 +429,9 @@ public class Test : MonoBehaviour
         {
             Debug.Log("Hit from the right");
             DisableGameplay();
-            /*while (verticalSpeed > -0.1)
-            {
-                MoveRight();
-            }
-            while (groundCheck == false)
-            {
-                MoveRight();
-            }*/
+
+            horizontalSpeed = horizontalHitForce;
+
             EnableGameplay();
 
         } 
@@ -415,6 +439,9 @@ public class Test : MonoBehaviour
         {
             Debug.Log("Hit from the left");
             DisableGameplay();
+
+            horizontalSpeed = - horizontalHitForce;
+
             EnableGameplay();
         }
     }
@@ -544,7 +571,7 @@ public class Test : MonoBehaviour
             ceilingDepth = leftCeilingDepth;
         }
 
-        if (ceilingCheck && verticalSpeed > 0)
+        if (ceilingCheck && groundCheck == false && verticalSpeed > 0)
         {
             verticalSpeed = 0;
             VerticalAntiStuckExe(ceilingDepth);
@@ -567,11 +594,5 @@ public class Test : MonoBehaviour
         {
             Debug.Log("CHAOS");
         }
-    }
-
-    public void CharaAnimation()
-    {
-        animator.SetBool("anim_groundCheck", groundCheck && verticalSpeed <= 0);
-        spriteRenderer.flipX = direction.x < 0;
     }
 }

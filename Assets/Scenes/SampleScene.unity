@@ -3432,7 +3432,7 @@ MonoBehaviour:
   feet: {fileID: 397070987}
   core: {fileID: 2013119214}
   verticalHitForce: 5
-  horizontalHitForce: 5
+  horizontalHitForce: 2.5
 --- !u!95 &2047038541
 Animator:
   serializedVersion: 5

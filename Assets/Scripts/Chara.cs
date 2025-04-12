@@ -55,6 +55,8 @@ public class Chara : MonoBehaviour
     private Vector2 TopRightPosition;
     private Vector2 BottomRightPosition;
 
+    public float wallOffset; 
+
     [Header("RayCasts")]
     public RaycastHit2D leftGroundCheck;
     public RaycastHit2D rightGroundCheck;
@@ -109,6 +111,9 @@ public class Chara : MonoBehaviour
     public float verticalHitForce;
     public float horizontalHitForce;
     
+    [Header("Animation")]
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
 
     void Start()
     {
@@ -130,6 +135,7 @@ public class Chara : MonoBehaviour
         playerPos2D = new Vector2(transform.position.x, transform.position.y);
 
         Gameplay();
+        CharaAnimation();
     }
 
     public void Gameplay()
@@ -243,9 +249,8 @@ public class Chara : MonoBehaviour
         }
         else if ((Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)) && groundCheck)
         {
-        //Maybe need to add support for when Walking and Sneaking
-            //horizontalSpeed -= walkingSpeed * direction.x;
-            //horizontalSpeed -= horizontalSpeed;
+            animator.SetBool("anim_isWalking", false);
+            animator.SetBool("anim_isSprinting", false);
             horizontalSpeed = 0;
         }
     }
@@ -365,10 +370,14 @@ public class Chara : MonoBehaviour
 
     public void RayCastTest()
     {
-        TopLeftPosition = TopLeft.transform.position;
-        BottomLeftPosition = BottomLeft.transform.position;
-        TopRightPosition = TopRight.transform.position;
-        BottomRightPosition = BottomRight.transform.position;
+        //TopLeftPosition = TopLeft.transform.position;
+        TopLeftPosition = new Vector2(TopLeft.transform.position.x + groundCheckDistance + wallOffset, TopLeft.transform.position.y - ceilingCheckDistance);
+        //BottomLeftPosition = BottomLeft.transform.position
+        BottomLeftPosition = new Vector2(BottomLeft.transform.position.x + groundCheckDistance + wallOffset, BottomLeft.transform.position.y + groundCheckDistance);
+        //TopRightPosition = TopRight.transform.position;
+        TopRightPosition = new Vector2(TopRight.transform.position.x - groundCheckDistance - wallOffset, TopRight.transform.position.y - ceilingCheckDistance);
+        //BottomRightPosition = BottomRight.transform.position;
+        BottomRightPosition = new Vector2(BottomRight.transform.position.x - groundCheckDistance - wallOffset, BottomLeft.transform.position.y + groundCheckDistance);
 
         //Debug.Log("RayCast");
 
@@ -594,5 +603,11 @@ public class Chara : MonoBehaviour
         {
             Debug.Log("CHAOS");
         }
+    }
+
+    public void CharaAnimation()
+    {
+        animator.SetBool("anim_groundCheck", groundCheck && verticalSpeed <= 0);
+        spriteRenderer.flipX = direction.x < 0;
     }
 }

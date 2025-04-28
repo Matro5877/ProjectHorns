@@ -608,6 +608,20 @@ public class Chara : MonoBehaviour
     public void CharaAnimation()
     {
         animator.SetBool("anim_groundCheck", groundCheck && verticalSpeed <= 0);
+        if (Input.GetKey(KeyCode.C))
+        {
+            animator.SetBool("anim_isSprinting", horizontalSpeed != 0);
+        }
+        else
+        {
+            animator.SetBool("anim_isWalking", horizontalSpeed != 0); 
+        }
+        
         spriteRenderer.flipX = direction.x < 0;
+    }
+
+    public void DashTimer(float duration, bool restart)
+    {
+
     }
 }

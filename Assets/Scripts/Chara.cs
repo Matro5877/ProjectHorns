@@ -16,7 +16,8 @@ public class Chara : MonoBehaviour
     public float lowerGravityForce;
     public float jumpForce;
     public float bumperForce;
-    
+    public float airResistance;
+
 
     [Header("Physique")]
     private float verticalSpeed;
@@ -126,7 +127,7 @@ public class Chara : MonoBehaviour
         //Debug.Log($"verticalSpeed : {verticalSpeed}");
         //Debug.Log($"rightGroundCheck.point.y: {rightGroundCheck.point.y}");
         //Debug.Log($"BottomRightPosition.y: {BottomRightPosition.y}");
-        Debug.Log($"horizontalSpeed: {horizontalSpeed}");
+        //Debug.Log($"horizontalSpeed: {horizontalSpeed}");
 
         transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
         transform.position += Vector3.right * horizontalSpeed * Time.deltaTime;
@@ -147,6 +148,8 @@ public class Chara : MonoBehaviour
         isMoving();
 
         JumpFallController();
+
+        AirResistance();
 
         CeilingThing();
 
@@ -275,7 +278,7 @@ public class Chara : MonoBehaviour
 
     private void Move(Vector2 movingDirection)
     {
-        if (groundCheck)
+        if (groundCheck && verticalSpeed <= 0)
         {
             if (isSprinting)
             {
@@ -315,6 +318,21 @@ public class Chara : MonoBehaviour
             }*/
         }
         
+    }
+
+    private void AirResistance()
+    {
+        if (((groundCheck == true && verticalSpeed <= 0) || groundCheck == false) && Input.GetKey(KeyCode.RightArrow) == false && Input.GetKey(KeyCode.LeftArrow) == false)
+        {
+            if (horizontalSpeed < 0)
+            {
+                horizontalSpeed += airResistance * Time.deltaTime;
+            }
+            if (horizontalSpeed > 0)
+            {
+                horizontalSpeed -= airResistance * Time.deltaTime;
+            }
+        }
     }
 
     private void CeilingThing()

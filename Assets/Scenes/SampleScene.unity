@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64ce446202e1ed4db4ef975ce2d5ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chara: {fileID: 0}
+  chara: {fileID: 2047038541}
   enemyPos2D: {x: 0, y: 0}
 --- !u!1 &220017803
 GameObject:
@@ -1529,7 +1529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2ee787d1777d44986498affd9340b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chara: {fileID: 0}
+  chara: {fileID: 2047038541}
 --- !u!1 &748236081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,7 +2932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2ee787d1777d44986498affd9340b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chara: {fileID: 0}
+  chara: {fileID: 2047038541}
 --- !u!58 &2024286313
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3117,7 +3117,7 @@ Transform:
   m_GameObject: {fileID: 2047038535}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.224, y: -3.196, z: 0}
+  m_LocalPosition: {x: 13, y: 10, z: 0}
   m_LocalScale: {x: 4.2229652, y: 4.2229652, z: 4.2229652}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3241,13 +3241,14 @@ MonoBehaviour:
   walkingSpeed: 3
   sprintingSpeed: 5
   sneakingSpeed: 1.5
-  aerialSpeed: 4
+  aerialSpeed: 6
   maxAerialSpeed: 4
   maxFallingSpeed: -14
-  gravityForce: 11
-  lowerGravityForce: 7
-  jumpForce: 6.5
+  gravityForce: 17
+  lowerGravityForce: 13
+  jumpForce: 8.5
   bumperForce: 10
+  airResistance: 6
   maxJumps: 1
   lateJumpDistance: 1
   canMoveRight: 0

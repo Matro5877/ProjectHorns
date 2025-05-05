@@ -13,7 +13,6 @@ public class CameraScriptsdsf : MonoBehaviour
 
     public string cameraMode;
 
-    // Start is called before the first frame update
     void Start()
     {
         cameraMode = "fullCharacter";

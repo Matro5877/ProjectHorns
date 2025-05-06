@@ -30,6 +30,7 @@ public class Chara : MonoBehaviour
     private bool hasToStopWhenTouchingGround;
     private bool lateJump;
     public float lateJumpDistance;
+    private bool jumpSource;
 
 
     [Header("Autorisations")]
@@ -141,7 +142,7 @@ public class Chara : MonoBehaviour
         leftControlUp = (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0);
         downControl = (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.LeftControl) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxis("VerticalMenu") > 0);
         jumpControl = (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Numlock) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5));
-        sprintControl = (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad1) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetAxis("ZL") > 0 || Input.GetAxis("ZR") > 0);
+        sprintControl = (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad1) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetAxis("ZL") > 0 || Input.GetAxis("ZR") > 0) || Input.GetKey(KeyCode.RightControl);
         interractControl = (Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.JoystickButton1));
         fallControl = (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Numlock) || Input.GetKey(KeyCode.JoystickButton0) || Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5));
 
@@ -205,8 +206,14 @@ public class Chara : MonoBehaviour
 
                 if (hasToStopWhenTouchingGround)
                 {
-                    animator.SetBool("anim_isWalking", false);
-                    animator.SetBool("anim_isSprinting", false);
+                    if (!isSprinting)
+                    {
+                        animator.SetBool("anim_isSprinting", false);
+                    }
+                    else if (!isWalking)
+                    {
+                        animator.SetBool("anim_isWalking", false);
+                    }
                     //horizontalSpeed = 0;
                     hasToStopWhenTouchingGround = false;
                 }
@@ -234,6 +241,27 @@ public class Chara : MonoBehaviour
         //horizontalSpeed = horizontalSpeed / 1.5f;
         verticalSpeed = force;
         jumpCount -= 1;
+        if (jumpSource)
+        {
+            maxAerialSpeed = sprintingSpeed;
+
+            jumpSource = false;
+        }
+        else
+        {
+            if (horizontalSpeed > 0)
+            {
+                maxAerialSpeed = horizontalSpeed;
+            }
+            else if (horizontalSpeed < 0)
+            {
+                maxAerialSpeed = -horizontalSpeed;
+            }
+            else
+            {
+                maxAerialSpeed = walkingSpeed;
+            }
+        }
     }
 
     public void Fall()
@@ -244,13 +272,27 @@ public class Chara : MonoBehaviour
         {
             verticalSpeed -= lowerGravityForce * Time.deltaTime;
             hasToStopWhenTouchingGround = true;
+            
+            
             //Debug.Log("Lowwww");
         }
         else
         {
             verticalSpeed -= gravityForce * Time.deltaTime;
             hasToStopWhenTouchingGround = true;
+            animator.SetBool("anim_isFloating", false);
             //Debug.Log("Not Lowwww");
+        }
+        if (fallControl && !groundCheck)
+        {
+            if (verticalSpeed < (jumpForce / 3))
+            {
+                animator.SetBool("anim_isFloating", true);
+            }
+        }
+        else
+        {
+            animator.SetBool("anim_isFloating", false);
         }
         
         if (verticalSpeed < maxFallingSpeed)
@@ -312,20 +354,23 @@ public class Chara : MonoBehaviour
                 //transform.position += movingDirection * sprintingSpeed * Time.deltaTime;
                 horizontalSpeed = sprintingSpeed * movingDirection.x;
                 animator.SetBool("anim_isSprinting",true);
+                animator.SetBool("anim_isWalking", false);
             }
-            else if (isWalking)
+            else if (isWalking && !isSprinting)
             {
                 //transform.position += movingDirection * walkingSpeed * Time.deltaTime;
                 horizontalSpeed = walkingSpeed * movingDirection.x;
                 animator.SetBool("anim_isWalking", true);
+                animator.SetBool("anim_isSprinting", false);
             }
-            else if (isSneaking)
+            else if (isSneaking && !isSprinting)
             {
                 horizontalSpeed = sneakingSpeed * movingDirection.x;
                 animator.SetBool("anim_isWalking", true);
+                animator.SetBool("anim_isSprinting", false);
             }
         }
-        else
+        else if (!groundCheck)
         {
             horizontalSpeed += aerialSpeed * movingDirection.x * Time.deltaTime;
 
@@ -474,7 +519,8 @@ public class Chara : MonoBehaviour
         if (verticalSpeed < -0.1)
         {
             Debug.Log("Jumpable");
-            verticalSpeed = bumperForce;
+            jumpSource = true;
+            Jump(bumperForce);
         }
     }
 
@@ -656,6 +702,15 @@ public class Chara : MonoBehaviour
     public void CharaAnimation()
     {
         animator.SetBool("anim_groundCheck", groundCheck && verticalSpeed <= 0);
+        if (Input.GetKey(KeyCode.C))
+        {
+            animator.SetBool("anim_isSprinting", horizontalSpeed != 0);
+        }
+        else
+        {
+            animator.SetBool("anim_isWalking", horizontalSpeed != 0); 
+        }
+        
         spriteRenderer.flipX = direction.x < 0;
     }
 

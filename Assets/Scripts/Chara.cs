@@ -234,6 +234,18 @@ public class Chara : MonoBehaviour
         //horizontalSpeed = horizontalSpeed / 1.5f;
         verticalSpeed = force;
         jumpCount -= 1;
+        if (horizontalSpeed > 0)
+        {
+            maxAerialSpeed = horizontalSpeed;
+        }
+        else if (horizontalSpeed < 0)
+        {
+            maxAerialSpeed = - horizontalSpeed;
+        }
+        else
+        {
+            maxAerialSpeed = walkingSpeed;
+        }
     }
 
     public void Fall()

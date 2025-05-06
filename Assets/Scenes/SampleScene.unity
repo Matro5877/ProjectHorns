@@ -1170,6 +1170,8 @@ MonoBehaviour:
   xCameraOffset: 0
   yCameraPosition: 5
   xCameraPosition: 0
+  CamPos: {x: 0, y: 0, z: 0}
+  stopCamera: 0
   Player: {fileID: 2047038535}
 --- !u!1 &619394800
 GameObject:
@@ -3135,7 +3137,7 @@ Transform:
   m_GameObject: {fileID: 2047038535}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.59, y: 4.93, z: 0}
+  m_LocalPosition: {x: 11.03, y: 4.66, z: 0}
   m_LocalScale: {x: 4.2229652, y: 4.2229652, z: 4.2229652}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3256,16 +3258,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebbb5f8de8c79a34186bf901bf7b4718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 3
-  sprintingSpeed: 5
+  walkingSpeed: 4
+  sprintingSpeed: 7
   sneakingSpeed: 1.5
-  aerialSpeed: 6
-  maxAerialSpeed: 4
+  aerialSpeed: 50
+  maxAerialSpeed: 7
   maxFallingSpeed: -14
-  gravityForce: 20
-  lowerGravityForce: 15
-  jumpForce: 12
-  bumperForce: 16
+  gravityForce: 60
+  lowerGravityForce: 40
+  jumpForce: 15
+  bumperForce: 20
   airResistance: 6
   maxJumps: 1
   lateJumpDistance: 1
@@ -3305,6 +3307,7 @@ MonoBehaviour:
   jumpControl: 0
   sprintControl: 0
   interractControl: 0
+  fallControl: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

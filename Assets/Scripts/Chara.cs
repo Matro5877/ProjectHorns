@@ -702,7 +702,7 @@ public class Chara : MonoBehaviour
     public void CharaAnimation()
     {
         animator.SetBool("anim_groundCheck", groundCheck && verticalSpeed <= 0);
-        if (Input.GetKey(KeyCode.C))
+        if (sprintControl)
         {
             animator.SetBool("anim_isSprinting", horizontalSpeed != 0);
         }

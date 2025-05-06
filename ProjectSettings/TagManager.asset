@@ -10,6 +10,7 @@ TagManager:
   - Jumpable
   - Feet
   - Core
+  - AntiCamera
   layers:
   - Default
   - TransparentFX
@@ -20,6 +21,7 @@ TagManager:
   - Platform
   - Jumpable
   - Non Jumpable Enemy
+  - AntiCamera
   - 
   - 
   - 
@@ -41,8 +43,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Camera
   m_SortingLayers:
   - name: Default
     uniqueID: 0

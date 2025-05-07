@@ -379,7 +379,11 @@ public class Chara : MonoBehaviour
 
     private void MoveRight()
     {
-        direction = Vector2.right;
+        if (!isDashing)
+        {
+            direction = Vector2.right;
+        }
+        
         if (rightWallCheck == false)
         {
             Move(direction);
@@ -388,7 +392,11 @@ public class Chara : MonoBehaviour
 
     private void MoveLeft()
     {
-        direction = Vector2.left;
+        if (!isDashing)
+        {
+            direction = Vector2.left;
+        }
+
         if (leftWallCheck == false)
         {
             Move(direction);
@@ -681,6 +689,8 @@ public class Chara : MonoBehaviour
         {
             //Debug.Log($"rightWallDepth: {rightWallDepth}");
             HorizontalAntiStuckExe(rightWallDepth / 2);
+            animator.SetBool("anim_isWalking", false);
+            animator.SetBool("anim_isSprinting", false);
         }
     }
     public void LeftWallAntiStuck()
@@ -701,6 +711,8 @@ public class Chara : MonoBehaviour
         {
             //Debug.Log($"leftWallDepth: {leftWallDepth}");
             HorizontalAntiStuckExe(leftWallDepth / 2);
+            animator.SetBool("anim_isWalking", false);
+            animator.SetBool("anim_isSprinting", false);
         }
     }
 

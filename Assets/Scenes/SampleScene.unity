@@ -4214,8 +4214,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingSpeed: 4
-  sprintingSpeed: 7
+  sprintingSpeed: 6
   sneakingSpeed: 1.5
+  dashingSpeed: 8
   aerialSpeed: 30
   maxAerialSpeed: 7
   maxFallingSpeed: -14
@@ -4224,13 +4225,14 @@ MonoBehaviour:
   jumpForce: 15
   bumperForce: 20
   airResistance: 6
-  dashDuration: 2
+  dashDuration: 0.4
   maxJumps: 1
   lateJumpDistance: 1
   canMoveRight: 0
   canMoveLeft: 0
   canJump: 0
   canCharge: 0
+  isDashing: 0
   canSprint: 0
   canStopSprinting: 0
   canBumper: 0

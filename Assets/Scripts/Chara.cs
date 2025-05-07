@@ -12,6 +12,7 @@ public class Chara : MonoBehaviour
     public float walkingSpeed;
     public float sprintingSpeed;
     public float sneakingSpeed;
+    public float dashingSpeed;
     public float aerialSpeed;
     public float maxAerialSpeed;
     public float maxFallingSpeed;
@@ -47,7 +48,7 @@ public class Chara : MonoBehaviour
     private bool isSprinting;
     private bool isWalking;
     private bool isSneaking;
-    private bool isDashing;
+    public bool isDashing;
     public bool canSprint;
     public bool canStopSprinting;
     public bool canBumper;
@@ -398,7 +399,11 @@ public class Chara : MonoBehaviour
     {
         if (groundCheck && verticalSpeed <= 0)
         {
-            if (isSprinting)
+            if (isDashing)
+            {
+                horizontalSpeed = dashingSpeed * movingDirection.x;
+            }
+            else if (isSprinting)
             {
                 //transform.position += movingDirection * sprintingSpeed * Time.deltaTime;
                 horizontalSpeed = sprintingSpeed * movingDirection.x;
@@ -446,8 +451,9 @@ public class Chara : MonoBehaviour
 
     private void AirResistance()
     {
-        if (((groundCheck == true && verticalSpeed <= 0) || groundCheck == false) && rightControl == false && leftControl == false)
+        if ((/*(groundCheck == true && verticalSpeed <= 0) || */groundCheck == false) && rightControl == false && leftControl == false && !isDashing)
         {
+            Debug.Log("Air Resistance");
             if (horizontalSpeed < 0)
             {
                 horizontalSpeed += airResistance * Time.deltaTime;
@@ -487,11 +493,6 @@ public class Chara : MonoBehaviour
         {
             StartCoroutine(DashTimer());
         }
-    }
-
-    public void VisibleDirection()
-    {
-
     }
 
     public void DisableGameplay()
@@ -584,21 +585,14 @@ public class Chara : MonoBehaviour
         if (playerPos2D.x > enemyPos2D.x)
         {
             Debug.Log("Hit from the right");
-            DisableGameplay();
 
             horizontalSpeed = horizontalHitForce;
-
-            EnableGameplay();
-
         } 
         else
         {
             Debug.Log("Hit from the left");
-            DisableGameplay();
 
             horizontalSpeed = - horizontalHitForce;
-
-            EnableGameplay();
         }
     }
 
@@ -780,9 +774,11 @@ public class Chara : MonoBehaviour
         }
     }
 
-    public void Dash()
+    public void DashEnd()
     {
-        isDashing = true;
+        isDashing = false;
+        canStopSprinting = true;
+        canDash = true;
     }
 
     public void DashController()
@@ -794,14 +790,16 @@ public class Chara : MonoBehaviour
     }
 
     IEnumerator DashTimer()
-    {
+    {   
+        Debug.Log("Fortnite 2");
+        animator.SetBool("anim_dashEnd", false);
         isDashing = true;
         canStopSprinting = false;
         canDash = false;
+        Move(direction);
 
         yield return new WaitForSeconds(dashDuration);
 
-        canStopSprinting = true;
-        isDashing = false;
+        animator.SetBool("anim_dashEnd", true);
     }
 }

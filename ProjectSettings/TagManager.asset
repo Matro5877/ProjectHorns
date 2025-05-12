@@ -11,6 +11,8 @@ TagManager:
   - Feet
   - Core
   - AntiCamera
+  - Dash
+  - Triggerer
   layers:
   - Default
   - TransparentFX
@@ -43,6 +45,7 @@ TagManager:
   - 
   - 
   - Camera
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0

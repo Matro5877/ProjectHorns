@@ -7,13 +7,19 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public Chara chara;
     public Vector2 enemyPos2D;
+    public bool canHit;
+    public float stunTime = 0.2f;
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Core"))
         {
-            Debug.Log("Enemy Touche Joueur");
-            chara.getHitBySomething(enemyPos2D);
+            if (canHit)
+            {
+                Debug.Log("Enemy Touche Joueur");
+                StartCoroutine(chara.Stun(stunTime));
+                chara.getHitBySomething(enemyPos2D);
+            }
         }
     }
 
@@ -21,5 +27,4 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     {
         enemyPos2D = transform.position;
     }
-
 }

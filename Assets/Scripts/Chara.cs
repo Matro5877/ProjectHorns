@@ -8,6 +8,8 @@ using static Unity.Collections.AllocatorManager;
 
 public class Chara : MonoBehaviour
 {
+    public int fruitCount;
+
     [Header("Paramètres Physique")]
     public float walkingSpeed;
     public float sprintingSpeed;
@@ -22,7 +24,8 @@ public class Chara : MonoBehaviour
     public float bumperForce;
     public float airResistance;
     public float dashDuration;
-
+    public float stunTime;
+    public float coyoteTimer;
 
     [Header("Physique")]
     private float verticalSpeed;
@@ -39,8 +42,8 @@ public class Chara : MonoBehaviour
     private float delayedHorizontalSpeed;
     private float fallHorizontalSpeed;
 
-
     [Header("Autorisations")]
+    public bool keysEnabled;
     public bool canMoveRight;
     public bool canMoveLeft;
     public bool canJump;
@@ -66,7 +69,7 @@ public class Chara : MonoBehaviour
     private Vector2 TopRightPosition;
     private Vector2 BottomRightPosition;
 
-    public float wallOffset; 
+    public float wallOffset;
 
     [Header("RayCasts")]
     public RaycastHit2D leftGroundCheck;
@@ -118,13 +121,13 @@ public class Chara : MonoBehaviour
     public LayerMask solidOnly;
     public Collider2D feet;
     public Collider2D core;
-    public GameObject rDash;
-    public GameObject lDash;
+    public Collider2D rDash;
+    public Collider2D lDash;
 
     [Header("Collisions")]
     public float verticalHitForce;
     public float horizontalHitForce;
-    
+
     [Header("Animation")]
     public Animator animator;
     public SpriteRenderer spriteRenderer;
@@ -143,8 +146,12 @@ public class Chara : MonoBehaviour
 
     void Start()
     {
+        lDash.enabled = false;
+        rDash.enabled = false;
+        direction = Vector2.right;
         verticalSpeed = 0;
         EnableGameplay();
+        EnableKeys();
     }
 
     void Update()
@@ -174,7 +181,7 @@ public class Chara : MonoBehaviour
         Controls();
 
         RayCastTest();
-        
+
         isSprintingVerif();
 
         isMoving();
@@ -194,21 +201,21 @@ public class Chara : MonoBehaviour
 
     public void Controls()
     {
-        rightControl = (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxis("HorizontalMenu") > 0);
-        leftControl = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxis("HorizontalMenu") < 0);
-        rightControlUp = (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0);
-        leftControlUp = (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0);
-        downControl = (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.LeftControl) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxis("VerticalMenu") > 0);
-        jumpControl = (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Numlock) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5));
-        sprintControl = (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad1) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.RightShift) || Input.GetAxis("ZR") > 0) || Input.GetAxis("ZL") > 0;
-        dashControlUp = (groundCheck && Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.F6) || Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.RightControl));
-        interractControl = (Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.JoystickButton1));
-        fallControl = (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Numlock) || Input.GetKey(KeyCode.JoystickButton0) || Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5));
+        rightControl = (keysEnabled && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxis("HorizontalMenu") > 0));
+        leftControl = (keysEnabled && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxis("HorizontalMenu") < 0));
+        rightControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));
+        leftControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));
+        downControl = (keysEnabled && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.LeftControl) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxis("VerticalMenu") > 0));
+        jumpControl = (keysEnabled && (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Numlock) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5)));
+        sprintControl = (keysEnabled && (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad1) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.RightShift) || Input.GetAxis("ZR") > 0) || Input.GetAxis("ZL") > 0);
+        dashControlUp = (keysEnabled && (groundCheck && Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.F6) || Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.RightControl)));
+        interractControl = (keysEnabled && (Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.JoystickButton1)));
+        fallControl = (keysEnabled && (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Numlock) || Input.GetKey(KeyCode.JoystickButton0) || Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5)));
     }
 
     public void Timer(int duration)
     {
-        
+
     }
 
     public void ResetJumpCount()
@@ -238,6 +245,7 @@ public class Chara : MonoBehaviour
                     maxAerialSpeed = walkingSpeed;
                     //Debug.Log("Else");
                 }
+                StartCoroutine(CoyoteTime());
             }
 
             Fall();
@@ -267,9 +275,10 @@ public class Chara : MonoBehaviour
                 }
             }
             delayedGroundCheck = true;
-            
+
         }
         // hi hi je suis caché
+        //^ qui a écrit ça ???
         if (jumpControl || lateJump)
         {
             if (jumpCount > 0)
@@ -283,7 +292,7 @@ public class Chara : MonoBehaviour
             lateJump = true;
         }
     }
-    
+
     public void Jump(float force)
     {
         lateJump = false;
@@ -321,8 +330,8 @@ public class Chara : MonoBehaviour
         {
             verticalSpeed -= lowerGravityForce * Time.deltaTime;
             hasToStopWhenTouchingGround = true;
-            
-            
+
+
             //Debug.Log("Lowwww");
         }
         else
@@ -343,10 +352,20 @@ public class Chara : MonoBehaviour
         {
             animator.SetBool("anim_isFloating", false);
         }
-        
+
         if (verticalSpeed < maxFallingSpeed)
         {
             verticalSpeed = maxFallingSpeed;
+        }
+    }
+
+    public IEnumerator CoyoteTime()
+    {
+        yield return new WaitForSeconds(coyoteTimer);
+
+        if (jumpCount > 0 && !groundCheck)
+        {
+            jumpCount -= 1;
         }
     }
 
@@ -383,7 +402,7 @@ public class Chara : MonoBehaviour
         {
             direction = Vector2.right;
         }
-        
+
         if (rightWallCheck == false)
         {
             Move(direction);
@@ -415,7 +434,7 @@ public class Chara : MonoBehaviour
             {
                 //transform.position += movingDirection * sprintingSpeed * Time.deltaTime;
                 horizontalSpeed = sprintingSpeed * movingDirection.x;
-                animator.SetBool("anim_isSprinting",true);
+                animator.SetBool("anim_isSprinting", true);
                 animator.SetBool("anim_isWalking", false);
             }
             else if (isWalking && !isSprinting)
@@ -440,11 +459,11 @@ public class Chara : MonoBehaviour
             {
                 horizontalSpeed = maxAerialSpeed;
             }
-            if (horizontalSpeed < - maxAerialSpeed)
+            if (horizontalSpeed < -maxAerialSpeed)
             {
-                horizontalSpeed = - maxAerialSpeed;
+                horizontalSpeed = -maxAerialSpeed;
             }
-            
+
             /*if ((- maxAerialSpeed < horizontalSpeed) && (horizontalSpeed < maxAerialSpeed))
             {
             horizontalSpeed += aerialSpeed * movingDirection.x * Time.deltaTime;
@@ -454,14 +473,14 @@ public class Chara : MonoBehaviour
                 horizontalSpeed -= aerialSpeed * movingDirection.x * Time.deltaTime;
             }*/
         }
-        
+
     }
 
     private void AirResistance()
     {
         if ((/*(groundCheck == true && verticalSpeed <= 0) || */groundCheck == false) && rightControl == false && leftControl == false && !isDashing)
         {
-            Debug.Log("Air Resistance");
+            //Debug.Log("Air Resistance");
             if (horizontalSpeed < 0)
             {
                 horizontalSpeed += airResistance * Time.deltaTime;
@@ -590,17 +609,22 @@ public class Chara : MonoBehaviour
     {
         Debug.Log("Joueur touche Enemy");
         Jump(verticalHitForce);
+        animator.SetBool("anim_dashEnd", false);
+        animator.SetBool("anim_isDashing", false);
+        DashEnd();
+        canStopSprinting = true;
+        hasToStopWhenTouchingGround = true;
         if (playerPos2D.x > enemyPos2D.x)
         {
             Debug.Log("Hit from the right");
 
             horizontalSpeed = horizontalHitForce;
-        } 
+        }
         else
         {
             Debug.Log("Hit from the left");
 
-            horizontalSpeed = - horizontalHitForce;
+            horizontalSpeed = -horizontalHitForce;
         }
     }
 
@@ -664,7 +688,7 @@ public class Chara : MonoBehaviour
         {
             groundDepth = leftGroundDepth;
         }
-        
+
         if (groundCheck && verticalSpeed < 0)
         {
             VerticalAntiStuckExe(groundDepth);
@@ -673,8 +697,8 @@ public class Chara : MonoBehaviour
 
     public void RightWallAntiStuck()
     {
-        topRightWallDepth = - (wallCheckDistance - rightTopWallCheck.distance);
-        bottomRightWallDepth = - (wallCheckDistance - rightBottomWallCheck.distance);
+        topRightWallDepth = -(wallCheckDistance - rightTopWallCheck.distance);
+        bottomRightWallDepth = -(wallCheckDistance - rightBottomWallCheck.distance);
 
         if (rightTopWallCheck)
         {
@@ -718,10 +742,10 @@ public class Chara : MonoBehaviour
 
     public void CeilingAntiStuck()
     {
-        rightCeilingDepth = - (ceilingCheckDistance - rightCeilingCheck.distance);
+        rightCeilingDepth = -(ceilingCheckDistance - rightCeilingCheck.distance);
         //Debug.Log($"rightCeilingCheck.distance: {rightCeilingCheck.distance}");
 
-        leftCeilingDepth = - (ceilingCheckDistance - leftCeilingCheck.distance);
+        leftCeilingDepth = -(ceilingCheckDistance - leftCeilingCheck.distance);
         //Debug.Log($"leftCeilingCheck.distance: {leftCeilingCheck.distance}");
 
         if (rightCeilingCheck)
@@ -748,6 +772,12 @@ public class Chara : MonoBehaviour
     public void HorizontalAntiStuckExe(float horizontalDepth)
     {
         transform.position = new Vector3(transform.position.x + horizontalDepth, transform.position.y, transform.position.z);
+        if (isDashing)
+        {
+            DashEnd();
+            getHitBySomething(direction);
+            Stun(1.5f);
+        }
     }
 
     public void Chaos()
@@ -791,6 +821,8 @@ public class Chara : MonoBehaviour
         isDashing = false;
         canStopSprinting = true;
         canDash = true;
+        lDash.enabled = false;
+        rDash.enabled = false;
     }
 
     public void DashController()
@@ -803,15 +835,41 @@ public class Chara : MonoBehaviour
 
     IEnumerator DashTimer()
     {   
-        Debug.Log("Fortnite 2");
+        //Debug.Log("Fortnite 2");
         animator.SetBool("anim_dashEnd", false);
         isDashing = true;
         canStopSprinting = false;
         canDash = false;
         Move(direction);
+        lDash.enabled = true;
+        rDash.enabled = true;
 
         yield return new WaitForSeconds(dashDuration);
 
         animator.SetBool("anim_dashEnd", true);
+    }
+
+    public void EnableKeys()
+    {
+        keysEnabled = true;
+    }
+
+    public void DisableKeys()
+    {
+        keysEnabled = false;
+    }
+
+    public IEnumerator Stun(float stunTime)
+    {
+        DisableKeys();
+
+        yield return new WaitForSeconds(stunTime);
+
+        EnableKeys();
+    }
+
+    public void AddFruits(int fruitAmount)
+    {
+        fruitCount += fruitAmount;
     }
 }

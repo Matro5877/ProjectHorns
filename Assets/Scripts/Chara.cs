@@ -30,7 +30,7 @@ public class Chara : MonoBehaviour
     [Header("Physique")]
     private float verticalSpeed;
     private float horizontalSpeed;
-    private Vector3 direction;
+    public Vector3 direction;
     private Vector3 visibleDirection;
     public int maxJumps;
     private int jumpCount;
@@ -143,6 +143,17 @@ public class Chara : MonoBehaviour
     public bool dashControlUp;
     public bool interractControl;
     public bool fallControl;
+
+    [Header("Particules")]
+    public GameObject walkParticleRight;
+    public GameObject jumpParticleRight;
+    public GameObject walkParticleLeft;
+    public GameObject jumpParticleLeft;
+
+    public float xWalkParticleOffset;
+    public float yWalkParticleOffset;
+    public float xJumpParticleOffset;
+    public float yJumpParticleOffset;
 
     void Start()
     {
@@ -283,6 +294,7 @@ public class Chara : MonoBehaviour
         {
             if (jumpCount > 0)
             {
+                JumpParticle();
                 Jump(jumpForce);
             }
         }
@@ -790,6 +802,8 @@ public class Chara : MonoBehaviour
 
     public void CharaAnimation()
     {
+        spriteRenderer.flipX = direction.x < 0;
+
         animator.SetBool("anim_isDashing", isDashing);
         animator.SetBool("anim_groundCheck", groundCheck && verticalSpeed <= 0);
         if (sprintControl)
@@ -800,8 +814,6 @@ public class Chara : MonoBehaviour
         {
             animator.SetBool("anim_isWalking", horizontalSpeed != 0); 
         }
-        
-        spriteRenderer.flipX = direction.x < 0;
     }
     // Hop je saute
     public void Dance()
@@ -871,5 +883,30 @@ public class Chara : MonoBehaviour
     public void AddFruits(int fruitAmount)
     {
         fruitCount += fruitAmount;
+    }
+
+    public void WalkParticle()
+    {
+        //Debug.Log($"chara.direction from source: {direction.x}");
+        if (direction.x > 0)
+        {
+            Instantiate(walkParticleRight, new Vector3(transform.position.x + xWalkParticleOffset * direction.x, transform.position.y + yWalkParticleOffset, transform.position.z), transform.rotation);
+        }
+        else
+        {
+            Instantiate(walkParticleLeft, new Vector3(transform.position.x + xWalkParticleOffset * direction.x, transform.position.y + yWalkParticleOffset, transform.position.z), transform.rotation);
+        }
+    }
+
+    public void JumpParticle()
+    {
+        if (direction.x > 0)
+        {
+            Instantiate(jumpParticleRight, new Vector3(transform.position.x + xJumpParticleOffset * direction.x, transform.position.y + yJumpParticleOffset, transform.position.z), transform.rotation);
+        }
+        else
+        {
+            Instantiate(jumpParticleLeft, new Vector3(transform.position.x + xJumpParticleOffset * direction.x, transform.position.y + yJumpParticleOffset, transform.position.z), transform.rotation);
+        }
     }
 }

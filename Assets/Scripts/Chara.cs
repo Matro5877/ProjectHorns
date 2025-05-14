@@ -225,7 +225,7 @@ public class Chara : MonoBehaviour
         sprintControl = (keysEnabled && (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.RightShift) || Input.GetAxis("ZR") > 0) || Input.GetAxis("ZL") > 0);
         dashControlUp = (keysEnabled && (groundCheck && Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.F6) || Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.RightControl)));
         interractControl = (keysEnabled && (Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.Z) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Keypad9)));
-        fallControl = (keysEnabled && (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Numlock) || Input.GetKey(KeyCode.JoystickButton0) || Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5)));
+        fallControl = (keysEnabled && (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Numlock) || Input.GetKey(KeyCode.JoystickButton0) || Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5)));
     }
 
     public void Timer(int duration)
@@ -852,9 +852,9 @@ public class Chara : MonoBehaviour
             animator.SetBool("anim_isDancing", false);
         }
 
-        Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround")));
+        /*Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround")));
         Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir")));
-        Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat")));
+        Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat")));*/
 
         if (!groundCheck)
         {
@@ -863,14 +863,14 @@ public class Chara : MonoBehaviour
                 animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround"),0);
                 animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir"),0);
                 animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat"),1);
-                Debug.Log("Anim Float");
+                //Debug.Log("Anim Float");
             }
             else
             {
                 animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround"),0);
                 animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir"),1);
                 animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat"),0);
-                Debug.Log("Anim Jump");
+                //Debug.Log("Anim Jump");
             }
         }
         else
@@ -878,7 +878,7 @@ public class Chara : MonoBehaviour
             animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround"),1);
             animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir"),0);
             animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat"),0);
-            Debug.Log("Anim Ground");
+            //Debug.Log("Anim Ground");
         }
     }
 
@@ -911,6 +911,7 @@ public class Chara : MonoBehaviour
         rDash.enabled = true;
 
         yield return new WaitForSeconds(dashDuration);
+        Debug.Log("DashEnd");
 
         animator.SetBool("anim_dashEnd", true);
     }

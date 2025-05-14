@@ -54,6 +54,8 @@ public class Chara : MonoBehaviour
     private bool isWalking;
     private bool isSneaking;
     public bool isDashing;
+
+    public bool isFloating;
     public bool canSprint;
     public bool canStopSprinting;
     public bool canBumper;
@@ -353,6 +355,7 @@ public class Chara : MonoBehaviour
             verticalSpeed -= gravityForce * Time.deltaTime;
             hasToStopWhenTouchingGround = true;
             animator.SetBool("anim_isFloating", false);
+            isFloating = false;
             //Debug.Log("Not Lowwww");
         }
         if (fallControl && !groundCheck)
@@ -360,11 +363,13 @@ public class Chara : MonoBehaviour
             if (verticalSpeed < (jumpForce / 3))
             {
                 animator.SetBool("anim_isFloating", true);
+                isFloating = true;
             }
         }
         else
         {
             animator.SetBool("anim_isFloating", false);
+            isFloating = false;
         }
 
         if (verticalSpeed < maxFallingSpeed)
@@ -845,6 +850,35 @@ public class Chara : MonoBehaviour
         else
         {
             animator.SetBool("anim_isDancing", false);
+        }
+
+        Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround")));
+        Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir")));
+        Debug.Log(animator.GetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat")));
+
+        if (!groundCheck)
+        {
+            if (isFloating)
+            {
+                animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround"),0);
+                animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir"),0);
+                animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat"),1);
+                Debug.Log("Anim Float");
+            }
+            else
+            {
+                animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround"),0);
+                animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir"),1);
+                animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat"),0);
+                Debug.Log("Anim Jump");
+            }
+        }
+        else
+        {
+            animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnGround"),1);
+            animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAir"),0);
+            animator.SetLayerWeight(animator.GetLayerIndex("Layer_DashOnAirFloat"),0);
+            Debug.Log("Anim Ground");
         }
     }
 

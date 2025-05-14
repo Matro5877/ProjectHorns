@@ -15,6 +15,7 @@ public class Chara : MonoBehaviour
     public float sprintingSpeed;
     public float sneakingSpeed;
     public float dashingSpeed;
+    public float slowDashingSpeed;
     public float aerialSpeed;
     public float maxAerialSpeed;
     public float maxFallingSpeed;
@@ -465,7 +466,19 @@ public class Chara : MonoBehaviour
         {
             if (isDashing)
             {
-                horizontalSpeed = dashingSpeed * movingDirection.x;
+                if (direction.x > 0 && leftControl)
+                {
+                    horizontalSpeed = slowDashingSpeed * movingDirection.x;
+                }
+                else if (direction.x < 0 && rightControl)
+                {
+                    horizontalSpeed = slowDashingSpeed * movingDirection.x;
+
+                }
+                else 
+                {
+                    horizontalSpeed = dashingSpeed * movingDirection.x;
+                }
             }
             else if (isSprinting)
             {

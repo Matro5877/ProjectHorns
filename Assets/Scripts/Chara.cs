@@ -42,6 +42,8 @@ public class Chara : MonoBehaviour
     private float delayedHorizontalSpeed;
     private float fallHorizontalSpeed;
 
+    private bool turnTheParticle;
+
     [Header("Autorisations")]
     public bool keysEnabled;
     public bool canMoveRight;
@@ -216,11 +218,11 @@ public class Chara : MonoBehaviour
         leftControl = (keysEnabled && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxis("HorizontalMenu") < 0));
         rightControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));
         leftControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));
-        downControl = (keysEnabled && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.LeftControl) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxis("VerticalMenu") > 0));
-        jumpControl = (keysEnabled && (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Numlock) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5)));
-        sprintControl = (keysEnabled && (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad1) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.RightShift) || Input.GetAxis("ZR") > 0) || Input.GetAxis("ZL") > 0);
-        dashControlUp = (keysEnabled && (groundCheck && Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.F6) || Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.RightControl)));
-        interractControl = (keysEnabled && (Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.JoystickButton1)));
+        downControl = (keysEnabled && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.LeftControl) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxis("VerticalMenu") > 0));
+        jumpControl = (keysEnabled && (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Numlock) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5)));
+        sprintControl = (keysEnabled && (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.RightShift) || Input.GetAxis("ZR") > 0) || Input.GetAxis("ZL") > 0);
+        dashControlUp = (keysEnabled && (groundCheck && Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.F6) || Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.RightControl)));
+        interractControl = (keysEnabled && (Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.Z) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Keypad9)));
         fallControl = (keysEnabled && (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Numlock) || Input.GetKey(KeyCode.JoystickButton0) || Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5)));
     }
 
@@ -412,7 +414,16 @@ public class Chara : MonoBehaviour
     {
         if (!isDashing)
         {
+            if (direction.x == -1 && groundCheck)
+            {
+                turnTheParticle = true;
+            }
             direction = Vector2.right;
+            if (turnTheParticle)
+            {
+                WalkParticle();
+                turnTheParticle = false;
+            }
         }
 
         if (rightWallCheck == false)
@@ -425,7 +436,16 @@ public class Chara : MonoBehaviour
     {
         if (!isDashing)
         {
+            if (direction.x == 1 && groundCheck)
+            {
+                turnTheParticle = true;
+            }
             direction = Vector2.left;
+            if (turnTheParticle)
+            {
+                WalkParticle();
+                turnTheParticle = false;
+            }
         }
 
         if (leftWallCheck == false)
@@ -528,7 +548,7 @@ public class Chara : MonoBehaviour
                 isWalking = true;
             }
         }
-        if (dashControlUp)
+        if (dashControlUp && canDash)
         {
             StartCoroutine(DashTimer());
         }

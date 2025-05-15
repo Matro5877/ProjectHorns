@@ -160,8 +160,13 @@ public class Chara : MonoBehaviour
     public float xJumpParticleOffset;
     public float yJumpParticleOffset;
 
+    public CharaAudio charaAudio;
+    public scre scoretruc;
+
     void Start()
     {
+        
+
         lDash.enabled = false;
         rDash.enabled = false;
         direction = Vector2.right;
@@ -275,6 +280,7 @@ public class Chara : MonoBehaviour
             {
                 verticalSpeed = 0;
                 ResetJumpCount();
+                charaAudio.CharaStep();
 
                 if (hasToStopWhenTouchingGround)
                 {
@@ -301,6 +307,7 @@ public class Chara : MonoBehaviour
             {
                 JumpParticle();
                 Jump(jumpForce);
+                charaAudio.CharaStep();
             }
         }
 
@@ -324,11 +331,11 @@ public class Chara : MonoBehaviour
         }
         else
         {
-            if (horizontalSpeed > 0)
+            if (horizontalSpeed > 3)
             {
                 maxAerialSpeed = horizontalSpeed;
             }
-            else if (horizontalSpeed < 0)
+            else if (horizontalSpeed < 3)
             {
                 maxAerialSpeed = -horizontalSpeed;
             }
@@ -566,7 +573,7 @@ public class Chara : MonoBehaviour
                 isWalking = true;
             }
         }
-        if (dashControlUp && canDash)
+        if (dashControlUp && canDash && groundCheck)
         {
             StartCoroutine(DashTimer());
         }
@@ -951,6 +958,7 @@ public class Chara : MonoBehaviour
     public void AddFruits(int fruitAmount)
     {
         fruitCount += fruitAmount;
+        scoretruc.FruitAdd();
     }
 
     public void WalkParticle()

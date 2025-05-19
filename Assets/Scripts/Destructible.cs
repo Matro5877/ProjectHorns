@@ -13,6 +13,8 @@ public class Destructible : MonoBehaviour
     public bool canBeDestroyed;
     public float stunTime = 0.4f;
 
+    public GameObject destructibleObject;
+
     void Start()
     {
         
@@ -20,7 +22,7 @@ public class Destructible : MonoBehaviour
 
     void Update()
     {
-        
+        destructiblePos2D = transform.position;
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -32,9 +34,27 @@ public class Destructible : MonoBehaviour
                 Debug.Log("Destructible Touche Joueur");
                 StartCoroutine(chara.Stun(stunTime));
                 chara.getHitBySomething(destructiblePos2D);
-                destructibleCollider2D.enabled = false;
-                destructibleSpriteRenderer.enabled = false;
-                StartCoroutine(DestructibleRespawn());
+                foreach (SpriteRenderer child in transform)
+                {
+                    child.enabled = false;
+                    Debug.Log("child");
+                }
+                foreach (Collider2D child in transform)
+                {
+                    child.enabled = false;
+                }
+                //destructibleCollider2D.enabled = false;
+                //destructibleSpriteRenderer.enabled = false;
+                if (destructibleRespawnTime > 0)
+                {
+                    StartCoroutine(DestructibleRespawn());
+                }
+                /*
+                Debug.Log("Destructible Touche Joueur");
+                StartCoroutine(chara.Stun(stunTime));
+                chara.getHitBySomething(destructiblePos2D);
+                destructibleObject.SetActive(false);
+                */
             }
         }
     }

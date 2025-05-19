@@ -713,6 +713,7 @@ MonoBehaviour:
   xJumpParticleOffset: 0
   yJumpParticleOffset: 0
   charaAudio: {fileID: 1548596446558893665}
+  scoretruc: {fileID: 0}
 --- !u!82 &6506830802567992835
 AudioSource:
   m_ObjectHideFlags: 0

@@ -325,6 +325,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 64771171}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &64771174
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1543,6 +1546,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 348567200}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &348567203
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1692,6 +1698,7 @@ MonoBehaviour:
   canBeDestroyed: 1
   stunTime: 0.4
   selfCollider2D: {fileID: 363548397}
+  isSecret: 0
 --- !u!4 &363548399
 Transform:
   m_ObjectHideFlags: 0
@@ -3297,6 +3304,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 921615280}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &921615283
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3359,6 +3369,54 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 63.85, y: 7.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &940870185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 940870187}
+  - component: {fileID: 940870186}
+  m_Layer: 0
+  m_Name: FadeInManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &940870186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940870185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dafc0738c35a504ebe657f1dbf5f53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeIn: 1
+  destination: TestRoom02
+  transitionObject: {fileID: 1647270449402237766}
+  transition: {fileID: 1517827892}
+--- !u!4 &940870187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940870185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 147.7324, y: 9.775076, z: -2.3893874}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3638,6 +3696,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeIn: 0
+  destination: TestRoom02
+  transitionObject: {fileID: 1647270449402237766}
   transition: {fileID: 1517827892}
 --- !u!1 &1017396554
 GameObject:
@@ -4198,6 +4258,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 1200156877}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &1200156880
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4334,6 +4397,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 1325236382}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &1325236385
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4661,6 +4727,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 1407818315}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &1407818318
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4810,6 +4879,7 @@ MonoBehaviour:
   canBeDestroyed: 1
   stunTime: 0
   selfCollider2D: {fileID: 1414365666}
+  isSecret: 0
 --- !u!4 &1414365668
 Transform:
   m_ObjectHideFlags: 0
@@ -5501,6 +5571,7 @@ MonoBehaviour:
   canBeDestroyed: 0
   stunTime: 0
   selfCollider2D: {fileID: 0}
+  isSecret: 0
 --- !u!1 &1699449803
 GameObject:
   m_ObjectHideFlags: 0
@@ -6738,6 +6809,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 1880711092}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &1880711095
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6874,6 +6948,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 1888999394}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &1888999397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7010,6 +7087,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 1911280899}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &1911280902
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7146,6 +7226,9 @@ MonoBehaviour:
   chara: {fileID: 2047038541}
   Fruit: {fileID: 1954104441}
   fruitAmount: 1
+  currentSpeed: 0
+  acceleration: 0
+  speedLimit: 0
 --- !u!212 &1954104444
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7915,6 +7998,11 @@ PrefabInstance:
       addedObject: {fileID: 1034633127}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+--- !u!1 &1647270449402237766 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6659354720844093742, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+  m_PrefabInstance: {fileID: 1647270449402237765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2114183910065875643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8229,6 +8317,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1331853291}
+  - {fileID: 940870187}
   - {fileID: 1647270449402237765}
   - {fileID: 1750274163}
   - {fileID: 6868360800744403494}

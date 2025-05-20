@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Credits : MonoBehaviour
 {
+public GameObject amigo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,11 @@ public class Credits : MonoBehaviour
         {
             NewGame();
         }
+    }
+
+    public void CutAmigo()
+    {
+        amigo.SetActive(false);
     }
 
     public void NewGame()

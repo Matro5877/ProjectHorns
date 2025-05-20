@@ -545,6 +545,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeIn: 1
+  destination: 
+  transitionObject: {fileID: 1979108513}
   transition: {fileID: 1636493545}
 --- !u!4 &1082442116
 Transform:

@@ -9,6 +9,7 @@ public class SceneChanger : MonoBehaviour
     public bool fadeIn;
     public string destination;
 
+    public GameObject transitionObject;
     public SpriteRenderer transition;
 
     UnityEngine.Color white = new UnityEngine.Color(1f, 1f, 1f, 1f);
@@ -20,8 +21,10 @@ public class SceneChanger : MonoBehaviour
     {
         if (!fadeIn)
         {
+            transitionObject.SetActive(true);
             transition.color = black;
             transition.material.DOColor(transparentBlack, 0f);
+            
         }
         else
         {
@@ -41,6 +44,7 @@ public class SceneChanger : MonoBehaviour
 
     IEnumerator FadeOut()
     {
+        transitionObject.SetActive(true);
         transition.material.DOColor(black, 1f);
 
         yield return new WaitForSeconds(1f);

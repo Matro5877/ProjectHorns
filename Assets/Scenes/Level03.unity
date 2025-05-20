@@ -2185,11 +2185,11 @@ PrefabInstance:
       objectReference: {fileID: 1113977817}
     - target: {fileID: 6711177686754245196, guid: 4621f014a048b9c4bb03a29372416e52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.64
+      value: 59.4
       objectReference: {fileID: 0}
     - target: {fileID: 6711177686754245196, guid: 4621f014a048b9c4bb03a29372416e52, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.99
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 6711177686754245196, guid: 4621f014a048b9c4bb03a29372416e52, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4702,7 +4702,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2103529855}
+  m_Father: {fileID: 1815054620}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &298542522
 BoxCollider2D:
@@ -4790,7 +4790,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 8874224426f19be4b907789857db15ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9da4c0937d84111459eb2c5973a7e807, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6838,11 +6838,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 521839917845351802, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.64
+      value: 59.4
       objectReference: {fileID: 0}
     - target: {fileID: 521839917845351802, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.99
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 521839917845351802, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18445,11 +18445,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5579379503608412975, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.64
+      value: 59.4
       objectReference: {fileID: 0}
     - target: {fileID: 5579379503608412975, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.99
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 5579379503608412975, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23258,6 +23258,7 @@ Transform:
   - {fileID: 525519987}
   - {fileID: 1842461422}
   - {fileID: 732608835}
+  - {fileID: 298542521}
   - {fileID: 2103529855}
   - {fileID: 1665709249}
   m_Father: {fileID: 0}
@@ -27097,7 +27098,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 294017028}
-  - {fileID: 298542521}
   m_Father: {fileID: 1815054620}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2103529856

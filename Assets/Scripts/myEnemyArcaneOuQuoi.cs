@@ -9,6 +9,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public Vector2 enemyPos2D;
     public bool canHit;
     public float stunTime = 0.2f;
+    public Vector2 direction;
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
@@ -26,5 +27,10 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     private void Update()
     {
         enemyPos2D = transform.position;
+    }
+
+    public void Shoot()
+    {
+        return;
     }
 }

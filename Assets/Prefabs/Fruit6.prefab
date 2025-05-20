@@ -101,6 +101,9 @@ MonoBehaviour:
   chara: {fileID: 0}
   Fruit: {fileID: 3755128201927316639}
   fruitAmount: 6
+  currentSpeed: 0
+  acceleration: 0.0005
+  speedLimit: 0.0005
 --- !u!58 &1866574354331887280
 CircleCollider2D:
   m_ObjectHideFlags: 0

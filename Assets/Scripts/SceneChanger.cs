@@ -7,6 +7,7 @@ using DG.Tweening;
 public class SceneChanger : MonoBehaviour
 {
     public bool fadeIn;
+    public string destination;
 
     public SpriteRenderer transition;
 
@@ -44,7 +45,7 @@ public class SceneChanger : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        SceneManager.LoadScene("TestRoom02");
+        SceneManager.LoadScene(destination);
     }
 
 

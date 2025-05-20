@@ -8,6 +8,10 @@ public class Collectible : MonoBehaviour
     public GameObject Fruit;
     public int fruitAmount;
 
+    public float currentSpeed;
+    public float acceleration;
+    public float speedLimit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +21,17 @@ public class Collectible : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = new Vector2(transform.position.x,transform.position.y + currentSpeed);
+        currentSpeed += acceleration * Time.deltaTime;
+        if (currentSpeed > speedLimit)
+        {
+            acceleration = - acceleration;
+        }
+        if (currentSpeed < - speedLimit)
+        {
+            acceleration = - acceleration;
+        }
+
     }
 
     public void OnTriggerEnter2D(Collider2D collider)

@@ -146,6 +146,7 @@ public class Chara : MonoBehaviour
     public bool jumpControl;
     public bool sprintControl;
     public bool dashControlUp;
+    public bool dashControl;
     public bool interractControl;
     public bool fallControl;
 
@@ -229,6 +230,7 @@ public class Chara : MonoBehaviour
         downControl = (keysEnabled && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.LeftControl) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxis("VerticalMenu") > 0));
         jumpControl = (keysEnabled && (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Numlock) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5)));
         sprintControl = (keysEnabled && (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Keypad0) || Input.GetKey(KeyCode.Keypad2) || Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.F3) || Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.RightShift) || Input.GetAxis("ZR") > 0) || Input.GetAxis("ZL") > 0);
+        dashControl = (keysEnabled && (groundCheck && Input.GetKey(KeyCode.V) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.Keypad7) || Input.GetKey(KeyCode.Keypad1) || Input.GetKey(KeyCode.KeypadMinus) || Input.GetKey(KeyCode.F6) || Input.GetKey(KeyCode.JoystickButton3) || Input.GetKey(KeyCode.RightControl)));
         dashControlUp = (keysEnabled && (groundCheck && Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.F6) || Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.RightControl)));
         interractControl = (keysEnabled && (Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.Z) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Keypad9)));
         fallControl = (keysEnabled && (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Numlock) || Input.GetKey(KeyCode.JoystickButton0) || Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5)));
@@ -573,7 +575,7 @@ public class Chara : MonoBehaviour
                 isWalking = true;
             }
         }
-        if (dashControlUp && canDash && groundCheck)
+        if (dashControlUp && canDash && groundCheck && !(direction.x > 0 && rightWallCheck) && !(direction.x < 0 && leftWallCheck))
         {
             StartCoroutine(DashTimer());
         }
@@ -908,18 +910,22 @@ public class Chara : MonoBehaviour
         canDash = true;
         lDash.enabled = false;
         rDash.enabled = false;
+        dashEndReached = false;
     }
+
+    public bool dashEndReached;
 
     public void DashController()
     {
-        if (!isDashing)
+        if (dashEndReached && !dashControl)
         {
-
+            animator.SetBool("anim_dashEnd", true);
         }
     }
 
     IEnumerator DashTimer()
     {   
+        
         //Debug.Log("Fortnite 2");
         animator.SetBool("anim_dashEnd", false);
         isDashing = true;
@@ -928,11 +934,11 @@ public class Chara : MonoBehaviour
         Move(direction);
         lDash.enabled = true;
         rDash.enabled = true;
+        dashEndReached = false;
 
         yield return new WaitForSeconds(dashDuration);
         Debug.Log("DashEnd");
-
-        animator.SetBool("anim_dashEnd", true);
+        dashEndReached = true;
     }
 
     public void EnableKeys()
@@ -957,7 +963,7 @@ public class Chara : MonoBehaviour
     public void AddFruits(int fruitAmount)
     {
         fruitCount += fruitAmount;
-        scoretruc.FruitAdd();
+        //scoretruc.FruitAdd();
     }
 
     public void WalkParticle()

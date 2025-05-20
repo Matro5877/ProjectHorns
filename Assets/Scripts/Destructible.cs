@@ -13,6 +13,8 @@ public class Destructible : MonoBehaviour
 
     public Collider2D selfCollider2D;
 
+    public bool isSecret;
+
     void Start()
     {
         
@@ -41,7 +43,10 @@ public class Destructible : MonoBehaviour
                 {
                     child.enabled = false;
                 }*/
-                foreach (Transform child in transform)
+                hp --;
+                if (hp < 1)
+                {
+                    foreach (Transform child in transform)
                 {
                     SpriteRenderer childSpriteRenderer = child.GetComponent<SpriteRenderer>();
                     if (childSpriteRenderer != null)
@@ -55,6 +60,9 @@ public class Destructible : MonoBehaviour
                     }
                 }
                 selfCollider2D.enabled = false;
+                }
+                
+                
                 //destructibleCollider2D.enabled = false;
                 //destructibleSpriteRenderer.enabled = false;
                 if (destructibleRespawnTime > 0)

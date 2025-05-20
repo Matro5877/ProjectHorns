@@ -664,7 +664,6 @@ public class Chara : MonoBehaviour
 
     public void getHitBySomething(Vector2 enemyPos2D)
     {
-        Debug.Log("Joueur touche Enemy");
         Jump(verticalHitForce);
         animator.SetBool("anim_dashEnd", false);
         animator.SetBool("anim_isDashing", false);

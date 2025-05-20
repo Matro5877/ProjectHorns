@@ -7,13 +7,11 @@ public class Destructible : MonoBehaviour
     public int hp;
     public Chara chara;
     public Vector2 destructiblePos2D;
-    public Collider2D destructibleCollider2D;
-    public SpriteRenderer destructibleSpriteRenderer;
     public float destructibleRespawnTime;
     public bool canBeDestroyed;
     public float stunTime = 0.4f;
 
-    public GameObject destructibleObject;
+    public Collider2D selfCollider2D;
 
     void Start()
     {
@@ -34,7 +32,7 @@ public class Destructible : MonoBehaviour
                 Debug.Log("Destructible Touche Joueur");
                 StartCoroutine(chara.Stun(stunTime));
                 chara.getHitBySomething(destructiblePos2D);
-                foreach (SpriteRenderer child in transform)
+                /*foreach (SpriteRenderer child in transform)
                 {
                     child.enabled = false;
                     Debug.Log("child");
@@ -42,7 +40,21 @@ public class Destructible : MonoBehaviour
                 foreach (Collider2D child in transform)
                 {
                     child.enabled = false;
+                }*/
+                foreach (Transform child in transform)
+                {
+                    SpriteRenderer childSpriteRenderer = child.GetComponent<SpriteRenderer>();
+                    if (childSpriteRenderer != null)
+                    {
+                        childSpriteRenderer.enabled = false;
+                    }
+                    Collider2D childCollider2D = child.GetComponent<Collider2D>();
+                    if (childCollider2D != null)
+                    {
+                        childCollider2D.enabled = false;
+                    }
                 }
+                selfCollider2D.enabled = false;
                 //destructibleCollider2D.enabled = false;
                 //destructibleSpriteRenderer.enabled = false;
                 if (destructibleRespawnTime > 0)
@@ -63,7 +75,18 @@ public class Destructible : MonoBehaviour
     {
         yield return new WaitForSeconds(destructibleRespawnTime);
 
-        destructibleCollider2D.enabled = true;
-        destructibleSpriteRenderer.enabled = true;
+        foreach (Transform child in transform)
+        {
+            SpriteRenderer childSpriteRenderer = child.GetComponent<SpriteRenderer>();
+            if (childSpriteRenderer != null)
+            {
+                childSpriteRenderer.enabled = true;
+            }
+            Collider2D childCollider2D = child.GetComponent<Collider2D>();
+            if (childCollider2D != null)
+            {
+                childCollider2D.enabled = true;
+            }
+        }
     }
 }

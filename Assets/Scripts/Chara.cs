@@ -990,4 +990,12 @@ public class Chara : MonoBehaviour
             Instantiate(jumpParticleLeft, new Vector3(transform.position.x + xJumpParticleOffset * direction.x, transform.position.y + yJumpParticleOffset, transform.position.z), transform.rotation);
         }
     }
+
+    /*public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Projectile"))
+        {
+            //Stun(0.2f);
+        }
+    }*/
 }

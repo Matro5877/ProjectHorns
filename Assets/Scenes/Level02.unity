@@ -1600,11 +1600,11 @@ PrefabInstance:
       objectReference: {fileID: 1113977817}
     - target: {fileID: 6711177686754245196, guid: 4621f014a048b9c4bb03a29372416e52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.95
+      value: -5.588
       objectReference: {fileID: 0}
     - target: {fileID: 6711177686754245196, guid: 4621f014a048b9c4bb03a29372416e52, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.49
+      value: 1.769
       objectReference: {fileID: 0}
     - target: {fileID: 6711177686754245196, guid: 4621f014a048b9c4bb03a29372416e52, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4911,11 +4911,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 521839917845351802, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.95
+      value: -5.588
       objectReference: {fileID: 0}
     - target: {fileID: 521839917845351802, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.49
+      value: 1.769
       objectReference: {fileID: 0}
     - target: {fileID: 521839917845351802, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6044,8 +6044,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2054495527}
+  otherTrigger: {fileID: 1714094525}
   isShootRange: 0
   hasSpawned: 0
+  isInRange: 0
+  isInSpawnRange: 0
 --- !u!61 &659300682
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6078,7 +6081,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07733345, y: 1.8903513}
+  m_Offset: {x: -0.02991867, y: 1.8903513}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6089,7 +6092,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.476456, y: 6.3181877}
+  m_Size: {x: 12.669052, y: 6.3181877}
   m_EdgeRadius: 0
 --- !u!1 &668359014
 GameObject:
@@ -15481,11 +15484,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5579379503608412975, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.95
+      value: -5.588
       objectReference: {fileID: 0}
     - target: {fileID: 5579379503608412975, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.49
+      value: 1.769
       objectReference: {fileID: 0}
     - target: {fileID: 5579379503608412975, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18873,8 +18876,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2054495527}
+  otherTrigger: {fileID: 659300681}
   isShootRange: 1
   hasSpawned: 0
+  isInRange: 0
+  isInSpawnRange: 0
 --- !u!61 &1714094526
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20912,6 +20918,7 @@ GameObject:
   - component: {fileID: 1912500791}
   - component: {fileID: 1912500793}
   - component: {fileID: 1912500792}
+  - component: {fileID: 1912500794}
   m_Layer: 3
   m_Name: Grass_Tile (43)
   m_TagString: Solid Platform
@@ -21031,6 +21038,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &1912500794
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912500790}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1923079029
 GameObject:
   m_ObjectHideFlags: 0
@@ -22464,6 +22498,7 @@ GameObject:
   - component: {fileID: 2007467290}
   - component: {fileID: 2007467292}
   - component: {fileID: 2007467291}
+  - component: {fileID: 2007467293}
   m_Layer: 3
   m_Name: Grass_Tile (44)
   m_TagString: Solid Platform
@@ -22583,6 +22618,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &2007467293
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007467289}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2009602473
 GameObject:
   m_ObjectHideFlags: 0
@@ -23286,15 +23348,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64ce446202e1ed4db4ef975ce2d5ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chara: {fileID: 1734843152}
-  charaObject: {fileID: 205957080}
-  enemyPos2D: {x: 0, y: 0}
+  isProjectile: 0
   canHit: 0
+  doesDirectShoot: 1
   stunTime: 0.2
+  shootTimer: 3
+  yProjectileOffset: -0.6
+  xProjectileOffset: 0.9
+  enemyPos2D: {x: 0, y: 0}
   direction: {x: 0, y: 0}
   isFlipped: 0
   isInRange: 0
-  shootTimer: 3
+  isInSpawnRange: 0
+  isWaiting: 0
+  chara: {fileID: 1734843152}
+  charaObject: {fileID: 205957080}
+  projectilePrefabRight: {fileID: 8216217302437321366, guid: 9e87a8cd9a93ab24abc9e65f497e0682, type: 3}
+  projectilePrefabLeft: {fileID: 8216217302437321366, guid: 1abfa182f9995d841ae25b4975823cb2, type: 3}
   spriteRenderer: {fileID: 2054495528}
   collider: {fileID: 2054495530}
   animator: {fileID: 2054495526}

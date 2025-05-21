@@ -45,6 +45,7 @@ public class EnemyTrigger : MonoBehaviour
             }
             else
             {
+                enemyScript.Shoot();
                 //For the Range Trigger
                 isInRange = true;
                 enemyScript.isInRange = true;

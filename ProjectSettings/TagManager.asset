@@ -13,6 +13,7 @@ TagManager:
   - AntiCamera
   - Dash
   - Triggerer
+  - Projectile
   layers:
   - Default
   - TransparentFX

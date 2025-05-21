@@ -6,8 +6,11 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 {
     public bool isProjectile;
     public bool canHit;
+    public bool doesDirectShoot;
     public float stunTime = 0.2f;
     public float shootTimer;
+    public float yProjectileOffset;
+    public float xProjectileOffset;
 
     public Vector2 enemyPos2D;
     public Vector2 direction;
@@ -19,7 +22,8 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public Chara chara;
     public GameObject charaObject;
 
-    public GameObject projectilePrefab;
+    public GameObject projectilePrefabRight;
+    public GameObject projectilePrefabLeft;
     
     public SpriteRenderer spriteRenderer;
     public Collider2D collider;
@@ -27,7 +31,10 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     void Start()
     {
-        spriteRenderer.enabled = false;
+        if (!isProjectile)
+        {
+            spriteRenderer.enabled = false;
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -82,7 +89,27 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public void Shoot()
     {
-        animator.SetTrigger("Shoot");
+        animator.SetTrigger("Shoot");    
+    }
+
+    public void DirectShoot()
+    {
+        if (doesDirectShoot)
+        {
+            Shoot();
+        }
+    }
+
+    public void SpawnProjectile()
+    {
+        if (isFlipped)
+        {
+            Instantiate(projectilePrefabRight, new Vector2(transform.position.x + xProjectileOffset, transform.position.y + yProjectileOffset), transform.rotation);
+        }
+        else
+        {
+            Instantiate(projectilePrefabLeft, new Vector2(transform.position.x - xProjectileOffset, transform.position.y + yProjectileOffset), transform.rotation);
+        }
     }
 
     public void Spawn()
@@ -108,12 +135,12 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     {
         isWaiting= true;
         yield return new WaitForSeconds(shootTimer);
-
+        isWaiting = false;
         if (isInRange)
         {
             Debug.Log("Shoot");
 
-            isWaiting = false;
+            
 
             Shoot();
             StartCoroutine(ShootTimer());

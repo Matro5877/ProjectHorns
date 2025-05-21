@@ -364,7 +364,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4959708584594079612}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -647,7 +647,7 @@ MonoBehaviour:
   dashingSpeed: 8
   slowDashingSpeed: 5
   aerialSpeed: 30
-  maxAerialSpeed: 7
+  maxAerialSpeed: 5
   maxFallingSpeed: -14
   gravityForce: 60
   lowerGravityForce: 40
@@ -660,7 +660,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   maxJumps: 1
   lateJumpDistance: 1
-  keysEnabled: 0
+  keysEnabled: 1
   canMoveRight: 0
   canMoveLeft: 0
   canJump: 0
@@ -668,7 +668,7 @@ MonoBehaviour:
   isDashing: 0
   isFloating: 0
   canSprint: 0
-  canStopSprinting: 0
+  canStopSprinting: 1
   canBumper: 0
   canGetHit: 0
   canDash: 1
@@ -884,7 +884,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7456119573349167902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

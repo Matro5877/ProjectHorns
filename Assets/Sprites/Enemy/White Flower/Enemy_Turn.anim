@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy_Death
+  m_Name: Enemy_Turn
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -2132083672, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
+      value: {fileID: 1880379762, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
     - time: 0.083333336
-      value: {fileID: 1582015317, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
+      value: {fileID: -1770595202, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
     - time: 0.16666667
-      value: {fileID: -2132083672, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
+      value: {fileID: -1828471392, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
     - time: 0.25
-      value: {fileID: 1582015317, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
+      value: {fileID: 1577818509, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
+    - time: 0.33333334
+      value: {fileID: 409152328, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,21 +52,22 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -2132083672, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
-    - {fileID: 1582015317, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
-    - {fileID: -2132083672, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
-    - {fileID: 1582015317, guid: 282b4ad1dfe4c75489164e28db3df03f, type: 3}
+    - {fileID: 1880379762, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
+    - {fileID: -1770595202, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
+    - {fileID: -1828471392, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
+    - {fileID: 1577818509, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
+    - {fileID: 409152328, guid: a7edce0ee60e7e94e88ebeb6406430c9, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 0.4166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -80,7 +83,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.33333334
-    functionName: Dissapear
+    functionName: TurnEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

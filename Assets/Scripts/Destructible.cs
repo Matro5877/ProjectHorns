@@ -9,6 +9,8 @@ public class Destructible : MonoBehaviour
     public Vector2 destructiblePos2D;
     public float destructibleRespawnTime;
     public bool canBeDestroyed;
+    public myEnemyArcaneOuQuoi enemy;
+    public bool canBeKilled;
     public float stunTime = 0.4f;
 
     public Collider2D selfCollider2D;
@@ -31,7 +33,7 @@ public class Destructible : MonoBehaviour
         {
             if (canBeDestroyed)
             {
-                Debug.Log("Destructible Touche Joueur");
+                //Debug.Log("Destructible Touche Joueur");
                 StartCoroutine(chara.Stun(stunTime));
                 chara.getHitBySomething(destructiblePos2D);
                 /*foreach (SpriteRenderer child in transform)
@@ -75,6 +77,15 @@ public class Destructible : MonoBehaviour
                 chara.getHitBySomething(destructiblePos2D);
                 destructibleObject.SetActive(false);
                 */
+            }
+            else if (canBeKilled)
+            {
+                hp --;
+                
+                if (hp < 1)
+                {
+                    enemy.Die();
+                }
             }
         }
     }

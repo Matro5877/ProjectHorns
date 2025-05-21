@@ -5,9 +5,12 @@ using UnityEngine;
 public class EnemyTrigger : MonoBehaviour
 {
     public myEnemyArcaneOuQuoi enemyScript;
+    public EnemyTrigger otherTrigger;
 
     public bool isShootRange;
     public bool hasSpawned;
+    public bool isInRange;
+    public bool isInSpawnRange;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +21,11 @@ public class EnemyTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Is In Range");
+        if (isInRange && !enemyScript.isWaiting && hasSpawned)
+        {
+            StartCoroutine(enemyScript.ShootTimer());
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -27,16 +34,20 @@ public class EnemyTrigger : MonoBehaviour
         {
             if (!isShootRange)
             {
+                //For the Spawn Trigger
                 enemyScript.Spawn();
+                if (!hasSpawned)
+                {
+                    Debug.Log("First Spawn");
+                }
+                otherTrigger.hasSpawned = true;
                 hasSpawned = true;
             }
             else
             {
-                if (hasSpawned)
-                {
-                    enemyScript.isInRange = true; 
-                    StartCoroutine(enemyScript.ShootTimer());
-                }
+                //For the Range Trigger
+                isInRange = true;
+                enemyScript.isInRange = true;
             }
         }
     }
@@ -47,10 +58,12 @@ public class EnemyTrigger : MonoBehaviour
         {
             if (!isShootRange)
             {
-                //rien
+                //For the Spawn Trigger
             }
             else
             {
+                //For the Range Trigger
+                isInRange = false;
                 enemyScript.isInRange = false;
             }
         }

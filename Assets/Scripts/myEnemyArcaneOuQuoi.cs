@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class myEnemyArcaneOuQuoi : MonoBehaviour
 {
-
-    public Chara chara;
-    public GameObject charaObject;
-    public Vector2 enemyPos2D;
+    public bool isProjectile;
     public bool canHit;
     public float stunTime = 0.2f;
+    public float shootTimer;
+
+    public Vector2 enemyPos2D;
     public Vector2 direction;
     public bool isFlipped;
     public bool isInRange;
+    public bool isInSpawnRange;
+    public bool isWaiting;
 
-    public float shootTimer;
+    public Chara chara;
+    public GameObject charaObject;
 
+    public GameObject projectilePrefab;
+    
     public SpriteRenderer spriteRenderer;
     public Collider2D collider;
     public Animator animator;
@@ -41,14 +46,23 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     private void Update()
     {
-        TurnManager();
-        if (Input.GetKeyDown(KeyCode.F))
+        if (!isProjectile)
         {
-            Die();
+            //If the enemy isn't a Projectile
+           TurnManager();
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Shoot();
+            } 
+            spriteRenderer.flipX = isFlipped;
         }
-        enemyPos2D = transform.position;
-        spriteRenderer.flipX = isFlipped;
-        Debug.Log(isFlipped);
+        else
+        {
+            //If the enemy is a Projectile
+            
+        }
+        
+        enemyPos2D = transform.position; 
     }
 
     public void TurnManager()
@@ -68,7 +82,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public void Shoot()
     {
-        
+        animator.SetTrigger("Shoot");
     }
 
     public void Spawn()
@@ -92,12 +106,16 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public IEnumerator ShootTimer()
     {
+        isWaiting= true;
         yield return new WaitForSeconds(shootTimer);
 
         if (isInRange)
         {
-            Shoot();
             Debug.Log("Shoot");
+
+            isWaiting = false;
+
+            Shoot();
             StartCoroutine(ShootTimer());
         }
     }

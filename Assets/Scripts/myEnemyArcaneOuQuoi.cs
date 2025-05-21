@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class myEnemyArcaneOuQuoi : MonoBehaviour
 {
+    public bool isRed;
     public bool isProjectile;
     public bool canHit;
     public bool doesDirectShoot;
@@ -18,12 +19,17 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public bool isInRange;
     public bool isInSpawnRange;
     public bool isWaiting;
+    public bool fruitIsGiven;
 
     public Chara chara;
     public GameObject charaObject;
 
     public GameObject projectilePrefabRight;
     public GameObject projectilePrefabLeft;
+
+    public GameObject fruitGift;
+    public GameObject fruitKillAnim;
+    public Animator fruitKillAnimator;
     
     public SpriteRenderer spriteRenderer;
     public Collider2D collider;
@@ -31,6 +37,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     void Start()
     {
+        fruitIsGiven = false;
         if (!isProjectile)
         {
             spriteRenderer.enabled = false;
@@ -70,6 +77,11 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
         }
         
         enemyPos2D = transform.position; 
+
+        if (fruitIsGiven)
+        {
+            FruitFollow();
+        }
     }
 
     public void TurnManager()
@@ -89,7 +101,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public void Shoot()
     {
-        animator.SetTrigger("Shoot");    
+        animator.SetTrigger("Shoot");   
     }
 
     public void DirectShoot()
@@ -122,10 +134,13 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public void Die()
     {
         animator.SetTrigger("Die");
+        fruitKillAnimator.SetTrigger("Kill");
+        fruitIsGiven = true;
     }
 
     public void Dissapear()
     {
+        
         spriteRenderer.enabled = false;
         collider.enabled = false;
 
@@ -145,5 +160,10 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
             Shoot();
             StartCoroutine(ShootTimer());
         }
+    }
+
+    public void FruitFollow()
+    {
+        fruitGift.transform.position = fruitKillAnim.transform.position;
     }
 }

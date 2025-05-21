@@ -1422,6 +1422,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &132715577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6659354720844093742, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+  m_PrefabInstance: {fileID: 560566713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &135517169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,7 +1637,7 @@ GameObject:
   - component: {fileID: 144713419}
   - component: {fileID: 144713421}
   - component: {fileID: 144713422}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BreakableStone_Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5536,6 +5541,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7529731036930296624, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529731036930296624, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.7881638
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529731036930296624, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.57916516
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7500,7 +7517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728643174}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass_Tiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7692,7 +7709,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 732608835}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BreakableStones_Tiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7856,7 +7873,7 @@ GameObject:
   - component: {fileID: 747019002}
   - component: {fileID: 747019003}
   - component: {fileID: 747019004}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Destructible Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11055,6 +11072,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruit1
       objectReference: {fileID: 0}
+    - target: {fileID: 7466138194216000321, guid: 22ecde1c17a87b1489d7c7c1dfd5755a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466138194216000321, guid: 22ecde1c17a87b1489d7c7c1dfd5755a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466138194216000321, guid: 22ecde1c17a87b1489d7c7c1dfd5755a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8095985513746703154, guid: 22ecde1c17a87b1489d7c7c1dfd5755a, type: 3}
       propertyPath: chara
       value: 
@@ -11890,6 +11919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeIn: 0
   destination: TestRoom01
+  transitionObject: {fileID: 132715577}
   transition: {fileID: 469806437}
 --- !u!61 &1184002406
 BoxCollider2D:
@@ -13941,7 +13971,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 30e278164d7681946a9c59dd150a6541, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -19461,7 +19491,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 0cca310ec4b6cb345bb804f70ecc94e6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -20687,7 +20717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1842461422}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stone_Tiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class scre : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class scre : MonoBehaviour
 
     public bool fruitBoost;
 
+    public TMP_Text scoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,7 @@ public class scre : MonoBehaviour
     {
         Debug.Log(fruitCount);
         DynamicFruitCountController();
+        scoreText.text = $"{fruitCount}";
     }
 
     public void FruitAdd(int amount)

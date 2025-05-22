@@ -12,6 +12,9 @@ public class SceneChanger : MonoBehaviour
     public GameObject transitionObject;
     public SpriteRenderer transition;
 
+    public GameObject counterObject;
+    public scre counter;
+
     UnityEngine.Color white = new UnityEngine.Color(1f, 1f, 1f, 1f);
     UnityEngine.Color black = new UnityEngine.Color(0f, 0f, 0f, 1f);
     UnityEngine.Color transparentWhite = new UnityEngine.Color(1f, 1f, 1f, 0f);
@@ -28,9 +31,7 @@ public class SceneChanger : MonoBehaviour
         }
         else
         {
-            transition.color = black;
-            transition.material.DOColor(black, 0f);
-            transition.material.DOColor(transparentBlack, 1f);
+            StartCoroutine(FadeIn());
         }
     }
 
@@ -42,12 +43,29 @@ public class SceneChanger : MonoBehaviour
         }
     }
 
+    IEnumerator FadeIn()
+    {
+        transition.color = black;
+        transition.material.DOColor(black, 0f);
+
+        yield return new WaitForSeconds(1f);
+
+        transition.material.DOColor(transparentBlack, 1f);
+    }
+
     IEnumerator FadeOut()
     {
         transitionObject.SetActive(true);
         transition.material.DOColor(black, 1f);
 
         yield return new WaitForSeconds(1f);
+
+        counterObject = GameObject.Find("Scor");
+        if (counterObject != null)
+        {
+            counter = counterObject.GetComponent<scre>();
+        }
+        counter.SaveFruitCount();
 
         SceneManager.LoadScene(destination);
     }

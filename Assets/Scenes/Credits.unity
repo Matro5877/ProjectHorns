@@ -413,12 +413,12 @@ MonoBehaviour:
 
 
 
-    <SIZE=90>Contributors</SIZE>
+    <SIZE=90>Special
+    Contributors</SIZE>
 
 
 
-    <SIZE=60>Programmation
-    Help</SIZE>
+    <SIZE=60>Programmation Help</SIZE>
 
 
     <SIZE=40>Hugo
@@ -428,7 +428,8 @@ MonoBehaviour:
 
 
 
-    <SIZE=60>Assets Help</SIZE>
+    <SIZE=60>Assets
+    Help</SIZE>
 
 
     <SIZE=40>Lea

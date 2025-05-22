@@ -43,6 +43,7 @@ public class ProjectileBruh : MonoBehaviour
 
                 canMove = false;
                 selfCollider.enabled = false;
+                canHit = false;
 
                 animator.SetTrigger("Splash");
 

@@ -6,6 +6,8 @@ public class Bush : MonoBehaviour
 {
     public GameObject bushParticles;
     public Chara chara;
+
+    public bool isExit;
     
     // Start is called before the first frame update
     void Start()
@@ -23,9 +25,28 @@ public class Bush : MonoBehaviour
     {
         if (collider.CompareTag("Triggerer"))
         {
-            bushParticles.SetActive(true);
+            bushParticles.SetActive(false);
+            if (isExit)
+            {
+                bushParticles.SetActive(true);
+            }
             chara.forcedRight = true;
             chara.keysEnabled = false;
         }
+    }
+
+    public void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Core"))
+        {
+            bushParticles.SetActive(false);
+            if (!isExit)
+            {
+                bushParticles.SetActive(true);
+            }
+            chara.forcedRight = false;
+            chara.keysEnabled = true;
+        }
+        
     }
 }

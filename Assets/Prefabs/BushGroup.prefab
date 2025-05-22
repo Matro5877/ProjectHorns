@@ -120,7 +120,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004421562, y: -0.10688293}
+  m_Offset: {x: 0.20046425, y: -0.10688293}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6488431, y: 0.42623413}
+  m_Size: {x: 1.0586147, y: 0.42623413}
   m_EdgeRadius: 0
 --- !u!114 &569824591446120329
 MonoBehaviour:
@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bushParticles: {fileID: 3590975782216641822}
   chara: {fileID: 0}
+  isExit: 1
 --- !u!114 &6804723367147129935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +164,8 @@ MonoBehaviour:
   destination: Level03
   transitionObject: {fileID: 0}
   transition: {fileID: 0}
+  counterObject: {fileID: 0}
+  counter: {fileID: 0}
 --- !u!1 &3590975782216641822
 GameObject:
   m_ObjectHideFlags: 0

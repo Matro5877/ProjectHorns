@@ -21,6 +21,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public bool isWaiting;
     public bool fruitIsGiven;
     public bool rendererEnabled;
+    public bool canTurnAnim;
 
     public bool isDefDead;
 
@@ -100,7 +101,10 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public void Turn()
     {
-        animator.SetTrigger("Turn");
+        if (canTurnAnim)
+        {
+            animator.SetTrigger("Turn");
+        }
         Debug.Log("TurnEnd");
         isFlipped = !isFlipped;
     }

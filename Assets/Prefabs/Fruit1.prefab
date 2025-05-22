@@ -98,12 +98,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c396b3033425d7144b6aeff2b651be30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chara: {fileID: 0}
+  chara: {fileID: 3479725058692424441, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
   Fruit: {fileID: 3156825252695682709}
   fruitAmount: 1
   currentSpeed: 0
   acceleration: 0.0005
   speedLimit: 0.0005
+  isAuto: 0
+  addFruitToCounter:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!58 &2517327079559082539
 CircleCollider2D:
   m_ObjectHideFlags: 0

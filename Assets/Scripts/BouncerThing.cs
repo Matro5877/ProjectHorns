@@ -5,6 +5,7 @@ using UnityEngine;
 public class BouncerThing : MonoBehaviour
 {
     public ProjectileBruh projectile;
+    public Collider2D selfCollider;
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
@@ -12,6 +13,8 @@ public class BouncerThing : MonoBehaviour
         {
             Debug.Log("Feet");
             collider.gameObject.GetComponentInParent<Chara>().jumpOnJumpables();
+            selfCollider.enabled = false;
+            projectile.canHit = false;
             if (projectile != null)
             {
                 projectile.canMove = false;

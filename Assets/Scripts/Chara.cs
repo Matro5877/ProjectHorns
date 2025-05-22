@@ -165,9 +165,25 @@ public class Chara : MonoBehaviour
     public CharaAudio charaAudio;
     public scre scoretruc;
 
+    public GameObject counterObject;
+    public scre counter;
+
+    public float baseWalkingSpeed;
+    public float baseSprintingSpeed;
+    public float baseDashingSpeed;
+    public float fruitBoostMultiply;
+
     void Start()
     {
-        
+        baseWalkingSpeed = walkingSpeed;
+        baseSprintingSpeed = sprintingSpeed;
+        baseDashingSpeed = dashingSpeed;
+
+        counterObject = GameObject.Find("Scor");
+        if (counterObject != null)
+        {
+            counter = counterObject.GetComponent<scre>();
+        }
 
         lDash.enabled = false;
         rDash.enabled = false;
@@ -179,6 +195,19 @@ public class Chara : MonoBehaviour
 
     void Update()
     {
+        if (counter.fruitBoost)
+        {
+            walkingSpeed = baseWalkingSpeed * fruitBoostMultiply;
+            sprintingSpeed = baseSprintingSpeed * fruitBoostMultiply;
+            dashingSpeed = baseDashingSpeed * fruitBoostMultiply;
+        }
+        else
+        {
+            walkingSpeed = baseWalkingSpeed;
+            sprintingSpeed = baseSprintingSpeed;
+            dashingSpeed = baseDashingSpeed;
+        }
+
         if (groundCheck)
         {
             fallHorizontalSpeed = horizontalSpeed;
@@ -189,8 +218,14 @@ public class Chara : MonoBehaviour
         //Debug.Log($"BottomRightPosition.y: {BottomRightPosition.y}");
         //Debug.Log($"horizontalSpeed: {horizontalSpeed}");
 
-        transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
-        transform.position += Vector3.right * horizontalSpeed * Time.deltaTime;
+        //Debug.Log("Ouais " + (Time.deltaTime));
+
+        if (Time.deltaTime < 0.05f)
+        {
+            transform.position += Vector3.up * verticalSpeed * Time.deltaTime;
+            transform.position += Vector3.right * horizontalSpeed * Time.deltaTime;
+        }
+        
 
         //Used to have the 2D coordinates of the Character.
         playerPos2D = new Vector2(transform.position.x, transform.position.y);
@@ -219,7 +254,7 @@ public class Chara : MonoBehaviour
 
         DashController();
 
-        //Chaos();
+        Chaos();
     }
 
     public void Controls()
@@ -843,10 +878,14 @@ public class Chara : MonoBehaviour
 
     public void Chaos()
     {
-        for (int i = 0; i < 1000; i++)
+        if (Input.GetKey(KeyCode.K))
         {
-            Debug.Log("CHAOS");
+            for (int i = 0; i < 1000; i++)
+            {
+                Debug.Log("CHAOS");
+            }
         }
+        
     }
 
     public void CharaAnimation()

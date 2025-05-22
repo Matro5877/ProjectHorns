@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 8140315854685878577}
+  selfCollider: {fileID: 1283194839709319639}
 --- !u!61 &1283194839709319639
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -236,6 +237,7 @@ MonoBehaviour:
   damage: 0
   speed: 11
   stunTime: 0.2
+  canMove: 0
 --- !u!95 &4345112648498857752
 Animator:
   serializedVersion: 5

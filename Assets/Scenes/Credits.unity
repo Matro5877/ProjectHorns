@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8e9de15c03e1c47b709f1e34849972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amigo: {fileID: 0}
 --- !u!95 &90741510
 Animator:
   serializedVersion: 5
@@ -434,16 +435,18 @@ MonoBehaviour:
 
     Anthony
 
-    Neila</SIZE>
+    Neila
 
+    Aurelie
 
+    Neelu</SIZE>
 
 
     <SIZE=60>Font</SIZE>
 
 
     <SIZE=40>"CutePixel"
-    by
+    by Karim Servin (@zk4rim)
 
     </SIZE>
 
@@ -453,8 +456,8 @@ MonoBehaviour:
     <SIZE=60>Credits Song</SIZE>
 
 
-    <SIZE=40>"Amigo" by
-    NotAK</SIZE>
+    <SIZE=40>"Amigo"
+    by NotAK</SIZE>
 
 
 
@@ -471,7 +474,13 @@ MonoBehaviour:
 
 
 
-    <SIZE=80>THANK YOU FOR PLAYING</SIZE>'
+    <SIZE=80>THANK YOU FOR PLAYING</SIZE>
+
+
+
+
+    <SIZE=20>press
+    "esc" or "start" to go to main menu</SIZE>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b559f742a1804ed4a9c4bff698e792d2, type: 2}
   m_sharedMaterial: {fileID: -5861457445588575908, guid: b559f742a1804ed4a9c4bff698e792d2, type: 2}

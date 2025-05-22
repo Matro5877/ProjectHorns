@@ -642,10 +642,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fruitCount: 0
-  walkingSpeed: 4
-  sprintingSpeed: 6
+  walkingSpeed: 3.5
+  sprintingSpeed: 5
   sneakingSpeed: 1.5
-  dashingSpeed: 8
+  dashingSpeed: 7
   slowDashingSpeed: 5
   aerialSpeed: 30
   maxAerialSpeed: 5

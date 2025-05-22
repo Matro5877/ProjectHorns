@@ -18,7 +18,7 @@ public class ProjectileBruh : MonoBehaviour
     public float speed;
     public float stunTime;
 
-    private bool canMove;
+    public bool canMove;
 
     void Start()
     {

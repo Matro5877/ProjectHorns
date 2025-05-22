@@ -20,6 +20,9 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public bool isInSpawnRange;
     public bool isWaiting;
     public bool fruitIsGiven;
+    public bool rendererEnabled;
+
+    public bool isDefDead;
 
     public Chara chara;
     public GameObject charaObject;
@@ -28,6 +31,8 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public GameObject projectilePrefabLeft;
 
     public GameObject fruitGift;
+
+    public SpriteRenderer fruitGiftSprite;
     public GameObject fruitKillAnim;
     public Animator fruitKillAnimator;
     
@@ -37,6 +42,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     void Start()
     {
+        fruitGiftSprite.enabled = false;
         fruitIsGiven = false;
         if (!isProjectile)
         {
@@ -66,7 +72,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
            TurnManager();
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Shoot();
+                Shoot(false);
             } 
             spriteRenderer.flipX = isFlipped;
         }
@@ -99,16 +105,24 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
         isFlipped = !isFlipped;
     }
 
-    public void Shoot()
+    public void Shoot(bool isFast)
     {
-        animator.SetTrigger("Shoot");   
+        if (!isFast)
+        {
+            animator.SetTrigger("Shoot");   
+        }
+        else
+        {
+            animator.SetTrigger("FastShoot");
+        }
+        
     }
 
     public void DirectShoot()
     {
         if (doesDirectShoot)
         {
-            Shoot();
+            Shoot(false);
         }
     }
 
@@ -126,7 +140,10 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public void Spawn()
     {
-        spriteRenderer.enabled = true;
+        if (!isDefDead)
+        {
+            spriteRenderer.enabled = true;
+        }
         animator.SetTrigger("Spawn");
         StartCoroutine(ShootTimer());
     }
@@ -140,7 +157,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
     public void Dissapear()
     {
-        
+        isDefDead = true;
         spriteRenderer.enabled = false;
         collider.enabled = false;
 
@@ -157,7 +174,7 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
 
             
 
-            Shoot();
+            Shoot(false);
             StartCoroutine(ShootTimer());
         }
     }
@@ -165,5 +182,10 @@ public class myEnemyArcaneOuQuoi : MonoBehaviour
     public void FruitFollow()
     {
         fruitGift.transform.position = fruitKillAnim.transform.position;
+        if (!rendererEnabled)
+        {
+            fruitGiftSprite.enabled = true;
+        }
+        rendererEnabled = true;
     }
 }

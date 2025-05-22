@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5044194198628999536
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 76.049965
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.7527785
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567854445701611723, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2866303695387776599, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1937036098, guid: 9ffe6543128186c42bbdf499e8b06a00, type: 3}
+    - target: {fileID: 2866303695387776599, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013780584573337923, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 453f324e9a661c34ab7d44094487a24a, type: 2}
+    - target: {fileID: 7476707995267263913, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: m_Name
+      value: Killable Dangerous Enemy Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756839528543337271, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: isRed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756839528543337271, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: shootTimer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756839528543337271, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: fruitPrefab
+      value: 
+      objectReference: {fileID: 3156825252695682709, guid: 22ecde1c17a87b1489d7c7c1dfd5755a, type: 3}
+    - target: {fileID: 8756839528543337271, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: doesDirectShoot
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756839528543337271, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: projectilePrefabLeft
+      value: 
+      objectReference: {fileID: 8216217302437321366, guid: 5368f651801fb354ca1353ab9d7a7743, type: 3}
+    - target: {fileID: 8756839528543337271, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}
+      propertyPath: projectilePrefabRight
+      value: 
+      objectReference: {fileID: 8216217302437321366, guid: e64af1d8b12eaf64d96c28e83dfaeac7, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da88f0132b642b841aeef0cd19c1c5d0, type: 3}

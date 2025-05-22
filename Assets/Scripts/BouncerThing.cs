@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class BouncerThing : MonoBehaviour
 {
-
-    public Chara chara;
+    public ProjectileBruh projectile;
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Feet"))
         {
             Debug.Log("Feet");
-            chara.jumpOnJumpables();
+            collider.gameObject.GetComponentInParent<Chara>().jumpOnJumpables();
+            if (projectile != null)
+            {
+                projectile.canMove = false;
+                projectile.animator.SetTrigger("Splash");
+            }
         }
     }
 }

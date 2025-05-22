@@ -139,6 +139,7 @@ public class Chara : MonoBehaviour
 
     [Header("Contrôles")]
     public bool rightControl;
+    public bool forcedRight;
     public bool leftControl;
     public bool rightControlUp;
     public bool leftControlUp;
@@ -223,7 +224,7 @@ public class Chara : MonoBehaviour
 
     public void Controls()
     {
-        rightControl = (keysEnabled && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxis("HorizontalMenu") > 0));
+        rightControl = ((keysEnabled || forcedRight) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxis("HorizontalMenu") > 0));
         leftControl = (keysEnabled && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxis("HorizontalMenu") < 0));
         rightControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));
         leftControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));
@@ -400,7 +401,7 @@ public class Chara : MonoBehaviour
 
     public void isMoving()
     {
-        if (rightControl)
+        if (rightControl && !rightWallCheck)
         {
             if (canMoveRight)
             {
@@ -408,7 +409,7 @@ public class Chara : MonoBehaviour
                 MoveRight();
             }
         }
-        else if (leftControl)
+        else if (leftControl && !leftWallCheck)
         {
             if (canMoveLeft)
             {
@@ -416,7 +417,7 @@ public class Chara : MonoBehaviour
                 MoveLeft();
             }
         }
-        else if ((leftControlUp || rightControlUp) && groundCheck && canStopSprinting)
+        else if (((leftControlUp || rightControlUp) && groundCheck && canStopSprinting) || (leftWallCheck && direction.x < 0) || (rightWallCheck && direction.x > 0))
         {
             animator.SetBool("anim_isWalking", false);
             animator.SetBool("anim_isSprinting", false);
@@ -648,7 +649,6 @@ public class Chara : MonoBehaviour
         rightBottomWallDepth = rightBottomWallCheck.point.x - BottomRightPosition.x;
         rightTopWallDepth = rightTopWallCheck.point.x - TopRightPosition.x;*/
 
-
         CollisionsDoubleCheck();
 
         AntiStuck();
@@ -720,6 +720,9 @@ public class Chara : MonoBehaviour
         {
             ceilingCheck = false;
         }
+
+        canMoveRight = !rightWallCheck;
+        canMoveLeft = !leftWallCheck;
     }
 
     public void AntiStuck()

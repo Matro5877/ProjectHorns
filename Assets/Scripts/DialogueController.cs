@@ -17,8 +17,16 @@ public class DialogueController : MonoBehaviour
     UnityEngine.Color transparentWhite = new UnityEngine.Color(1f, 1f, 1f, 0f);
     UnityEngine.Color transparentBlack = new UnityEngine.Color(0f, 0f, 0f, 0f);
 
+    public Vector3 scaleSaver;
+
+    void Awake()
+    {
+        scaleSaver = transform.localScale;
+    }
+    
     void Start()
     {
+        //Debug.Log(this.name + scaleSaver);
         //dialogueBox.material.DOColor(transparentWhite, 0f);
         dialogueBoxObject.DOMove(new Vector3(npc.transform.position.x + 0, npc.transform.position.y + 0.5f, transform.position.z), 0f);
         dialogueBoxObject.DOScale(new Vector3(0, 0, 0), 0f);
@@ -37,7 +45,7 @@ public class DialogueController : MonoBehaviour
             showDialogue = true;
 
             dialogueBoxObject.DOMove(new Vector3(npc.transform.position.x + 0, npc.transform.position.y + 1, transform.position.z), 1f);
-            dialogueBoxObject.DOScale(new Vector3(1, 1.7f, 1), 1f);
+            dialogueBoxObject.DOScale(scaleSaver, 1f);
             //dialogueBox.material.DOColor(white, 1f);
         }
     }

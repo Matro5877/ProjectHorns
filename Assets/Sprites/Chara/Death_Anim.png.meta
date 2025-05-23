@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 003af46e403251f438af606b151822b0
+guid: 7a19e975113922c44b0931b598be879b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LifeObtained_0
+      name: Death_Anim_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00712e5a892cc6441b6a99d2607ae1de
-      internalID: 1474141427
+      spriteID: 0f611180160ba1c49834a1b54f610e65
+      internalID: 88937968
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_1
+      name: Death_Anim_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 256
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d190df5d7fe0f1b4eb4cc2b47347dd82
-      internalID: -1310430113
+      spriteID: 5e98e0602884ec04c90e2139d2fff450
+      internalID: 816690738
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_2
+      name: Death_Anim_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 512
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24122fb2c2f58b74c8a9e4d7e0f2c9a0
-      internalID: -442517564
+      spriteID: 1fb17b8aae26a804896bed92b9a9daa6
+      internalID: -1334810932
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_3
+      name: Death_Anim_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 768
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 376b5204ddc6b5747a7107d6639a569c
-      internalID: 77658583
+      spriteID: 44cbb0982c442cc4087ca6ff23401032
+      internalID: 471020180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_4
+      name: Death_Anim_4
       rect:
         serializedVersion: 2
-        x: 128
+        x: 1024
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0032fedcbdec6c44eafc9396f73ef90b
-      internalID: -692599422
+      spriteID: 9f861644e0ed6084591d92d8109a77b8
+      internalID: -51106317
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_5
+      name: Death_Anim_5
       rect:
         serializedVersion: 2
-        x: 160
+        x: 1280
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,20 +242,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56099a434187363428844a7e52ac41c7
-      internalID: 1760483634
+      spriteID: 63ef90ed8d768fe4985297e8f8f209c1
+      internalID: 393863284
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_6
+      name: Death_Anim_6
       rect:
         serializedVersion: 2
-        x: 192
+        x: 1536
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,8 +263,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ca4fa0cc2c554c4d9a6530531952d3c
-      internalID: -1039823175
+      spriteID: dbdd336b544e71e44b04601c34b4204b
+      internalID: 1095544443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Anim_7
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 0
+        width: 256
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5422afc76b56e5945b482b85b005c4c2
+      internalID: 466994797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Anim_8
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 256
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbc9585cc943ce34cbd0b36f568a6d96
+      internalID: -493929546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Anim_9
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 0
+        width: 256
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76625fc9e33f0144f9752d0355f7710b
+      internalID: -1465671661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Anim_10
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 256
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7eee1fa60452da49b3e51885769dcf2
+      internalID: -1696395299
       vertices: []
       indices: 
       edges: []
@@ -280,13 +364,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LifeObtained_0: 1474141427
-      LifeObtained_1: -1310430113
-      LifeObtained_2: -442517564
-      LifeObtained_3: 77658583
-      LifeObtained_4: -692599422
-      LifeObtained_5: 1760483634
-      LifeObtained_6: -1039823175
+      Death_Anim_0: 88937968
+      Death_Anim_1: 816690738
+      Death_Anim_10: -1696395299
+      Death_Anim_2: -1334810932
+      Death_Anim_3: 471020180
+      Death_Anim_4: -51106317
+      Death_Anim_5: 393863284
+      Death_Anim_6: 1095544443
+      Death_Anim_7: 466994797
+      Death_Anim_8: -493929546
+      Death_Anim_9: -1465671661
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -29,7 +29,7 @@ public GameObject amigo;
 
     public void NewGame()
     {
-        SceneManager.LoadScene("Level01");
+        SceneManager.LoadScene("LoadScene");
         Debug.Log("Fini");
     }
 }

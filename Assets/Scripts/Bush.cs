@@ -10,6 +10,7 @@ public class Bush : MonoBehaviour
 
     public bool isExit;
     public bool doesCutMusic;
+    private bool used;
     public AudioSource source;
     
     // Start is called before the first frame update
@@ -28,7 +29,7 @@ public class Bush : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Triggerer"))
+        if (collider.CompareTag("Core"))
         {
             bushParticles.SetActive(false);
             if (isExit)
@@ -39,8 +40,12 @@ public class Bush : MonoBehaviour
                     source.DOFade(0f, 1f);
                 }
             }
-            chara.forcedRight = true;
-            chara.keysEnabled = false;
+            if (!used)
+            {
+                chara.forcedRight = true;
+                chara.keysEnabled = false;
+            }
+            used = true;
         }
     }
 

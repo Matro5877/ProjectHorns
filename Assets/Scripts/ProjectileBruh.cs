@@ -20,8 +20,17 @@ public class ProjectileBruh : MonoBehaviour
 
     public bool canMove;
 
+    public GameObject counterObject;
+    public scre counter;
+
     void Start()
     {
+        counterObject = GameObject.Find("Scor");
+        if (counterObject != null)
+        {
+            counter = counterObject.GetComponent<scre>();
+        }
+
         canMove = true;
         selfCollider.enabled = true;
     }
@@ -49,6 +58,8 @@ public class ProjectileBruh : MonoBehaviour
 
                 StartCoroutine(collider.gameObject.GetComponentInParent<Chara>().Stun(stunTime));
                 collider.gameObject.GetComponentInParent<Chara>().getHitBySomething(transform.position);
+
+                counter.healthCount -= damage;
             }
         }
         if (collider.CompareTag("Solid Platform"))

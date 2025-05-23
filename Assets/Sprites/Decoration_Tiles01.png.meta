@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 003af46e403251f438af606b151822b0
+guid: 59916cf4d575af344b6716e59ed1c3e8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LifeObtained_0
+      name: Decoration_Tiles01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00712e5a892cc6441b6a99d2607ae1de
-      internalID: 1474141427
+      spriteID: 390ab4165aae4f541a458dd68a1b0929
+      internalID: -2113870297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_1
+      name: Decoration_Tiles01_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d190df5d7fe0f1b4eb4cc2b47347dd82
-      internalID: -1310430113
+      spriteID: aaeb89dba87ad0841919d7acb9e7931b
+      internalID: -179571490
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_2
+      name: Decoration_Tiles01_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
-        height: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24122fb2c2f58b74c8a9e4d7e0f2c9a0
-      internalID: -442517564
+      spriteID: f55528d4d62e52e48ac272c3f940521c
+      internalID: 1466888873
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_3
+      name: Decoration_Tiles01_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
-        height: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 376b5204ddc6b5747a7107d6639a569c
-      internalID: 77658583
+      spriteID: b688dc4edb27135499ebbe06f1efd2ef
+      internalID: -345763960
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_4
+      name: Decoration_Tiles01_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
-        height: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0032fedcbdec6c44eafc9396f73ef90b
-      internalID: -692599422
+      spriteID: dd1ab3af7fc053d4c81f930c391cbfb2
+      internalID: -2118009183
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_5
+      name: Decoration_Tiles01_5
       rect:
         serializedVersion: 2
         x: 160
         y: 0
         width: 32
-        height: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,20 +242,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56099a434187363428844a7e52ac41c7
-      internalID: 1760483634
+      spriteID: 2ae242180a3cd264ea5320dcf4ac5096
+      internalID: -333053181
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LifeObtained_6
+      name: Decoration_Tiles01_6
       rect:
         serializedVersion: 2
         x: 192
         y: 0
         width: 32
-        height: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,8 +263,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ca4fa0cc2c554c4d9a6530531952d3c
-      internalID: -1039823175
+      spriteID: f1d41db44e3fa6d43ac0ccd4bd109647
+      internalID: -1662874541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Decoration_Tiles01_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60bc67c3be10e9f49966adcda4bada6d
+      internalID: -777150638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Decoration_Tiles01_8
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18ca72b7786fbe141b737902f767f83d
+      internalID: 322647784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Decoration_Tiles01_9
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd86ea7a2ccc1fd4ca5d539c057804e9
+      internalID: -1478412254
       vertices: []
       indices: 
       edges: []
@@ -280,13 +343,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LifeObtained_0: 1474141427
-      LifeObtained_1: -1310430113
-      LifeObtained_2: -442517564
-      LifeObtained_3: 77658583
-      LifeObtained_4: -692599422
-      LifeObtained_5: 1760483634
-      LifeObtained_6: -1039823175
+      Decoration_Tiles01_0: -2113870297
+      Decoration_Tiles01_1: -179571490
+      Decoration_Tiles01_2: 1466888873
+      Decoration_Tiles01_3: -345763960
+      Decoration_Tiles01_4: -2118009183
+      Decoration_Tiles01_5: -333053181
+      Decoration_Tiles01_6: -1662874541
+      Decoration_Tiles01_7: -777150638
+      Decoration_Tiles01_8: 322647784
+      Decoration_Tiles01_9: -1478412254
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

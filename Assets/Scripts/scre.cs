@@ -34,7 +34,7 @@ public class scre : MonoBehaviour
         {
             SceneManager.LoadScene(destination);
         }
-        healthCount = 5;
+        healthCount = 4;
     }
 
     // Update is called once per frame
@@ -43,6 +43,24 @@ public class scre : MonoBehaviour
         Debug.Log(fruitCount);
         DynamicFruitCountController();
         scoreText.text = $"{fruitCount}";
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            healthCount--;
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            healthCount++;
+        }
+
+        if (healthCount < 1)
+        {
+            //Die
+        }
+        if (healthCount > 4)
+        {
+            healthCount = 4;
+        }
     }
 
     public void FruitAdd(int amount)

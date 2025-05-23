@@ -54,3 +54,5 @@ MonoBehaviour:
   dynamicFruitCountIcon: {fileID: 0}
   healthCount: 3
   fruitBoost: 0
+  scoreText: {fileID: 0}
+  destination: 

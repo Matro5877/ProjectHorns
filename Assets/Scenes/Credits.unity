@@ -251,13 +251,107 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<SIZE=90>A GAME ABOUT <COLOR=#bd0bc8>FRUITS</COLOR></SIZE>\n<SIZE=40>Game
-    by Matro</SIZE>\n\n\n\n\n\n\n\n\n\n<SIZE=60>Made with Unity</SIZE>\n\n\n\n\n\n\n\n\n\n<SIZE=90>Special
-    Contributors</SIZE>\n\n\n<SIZE=60>Programmation Help</SIZE>\n\n<SIZE=40>Hugo\nHubert</SIZE>\n\n\n\n<SIZE=60>Assets
-    Help</SIZE>\n\n<SIZE=40>Lea\nAnthony\nNeila\nLiam\nAurelie\nNeeluM\xE9lissaKudaMehdi</SIZE>\n\n<SIZE=60>Font</SIZE>\n\n<SIZE=40>\"CutePixel\"
-    by Karim Servin (@zk4rim)</SIZE>\n\n\n\n<SIZE=60>Credits Song</SIZE>\n\n<SIZE=40>\"Amigo\"
-    by NotAK</SIZE>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<SIZE=80>THANK YOU FOR PLAYING</SIZE>\n\n\n\n<SIZE=20>press
-    \"ESCAPE\" or \"START\" to go to main menu</SIZE>"
+  m_text: '<SIZE=90>A GAME ABOUT <COLOR=#bd0bc8>FRUITS</COLOR></SIZE>
+
+    <SIZE=40>Game
+    by Matro</SIZE>
+
+
+
+
+
+
+
+
+
+
+    <SIZE=60>Made with Unity</SIZE>
+
+
+
+
+
+
+
+
+
+
+    <SIZE=90>Special
+    Contributors</SIZE>
+
+
+
+    <SIZE=60>Programmation Help</SIZE>
+
+
+    <SIZE=40>Hugo
+
+    Hubert</SIZE>
+
+
+
+
+    <SIZE=60>Assets
+    Help</SIZE>
+
+
+    <SIZE=40>Lea
+
+    Anthony
+
+    Neila
+
+    Liam
+
+    Aurelie
+
+    Neelu
+
+    Melissa
+
+    Kuda
+
+    Mehdi</SIZE>
+
+
+
+    <SIZE=60>Font</SIZE>
+
+
+    <SIZE=40>"CutePixel"
+    by Karim Servin (@zk4rim)</SIZE>
+
+
+
+
+    <SIZE=60>Credits Song</SIZE>
+
+
+    <SIZE=40>"Amigo"
+    by NotAK</SIZE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <SIZE=80>THANK YOU FOR PLAYING</SIZE>
+
+
+
+
+    <SIZE=20>press
+    "ESCAPE" or "START" to proceed</SIZE>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b559f742a1804ed4a9c4bff698e792d2, type: 2}
   m_sharedMaterial: {fileID: -5861457445588575908, guid: b559f742a1804ed4a9c4bff698e792d2, type: 2}
@@ -618,7 +712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRemovingCounter: 1
-  isRemovingMusic: 1
+  isChangingMusic: 0
   targetSceneName: 
   itSelf: {fileID: 0}
   counterObject: {fileID: 0}
@@ -879,6 +973,12 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2886119363578315824, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+    - {fileID: 2315159534838992303, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+    - {fileID: 7694843986880866579, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+    - {fileID: 1377380888159723751, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+    - {fileID: 8826250446738387670, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+    - {fileID: 7122660796414595852, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
+    - {fileID: 4557245545265840802, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d0b51b51a484c249b73dcd7bbf16d97, type: 3}

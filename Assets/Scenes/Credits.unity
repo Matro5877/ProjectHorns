@@ -617,6 +617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa20b2420877bf49846c005f5d96c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRemovingCounter: 1
+  isRemovingMusic: 1
   targetSceneName: 
   itSelf: {fileID: 0}
   counterObject: {fileID: 0}

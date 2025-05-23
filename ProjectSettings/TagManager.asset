@@ -15,6 +15,7 @@ TagManager:
   - Triggerer
   - Projectile
   - BushExit
+  - Bush Exit
   layers:
   - Default
   - TransparentFX

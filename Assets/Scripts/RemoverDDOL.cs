@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class RemoverDDOL : MonoBehaviour
 {
+    public bool isRemovingCounter;
+    public bool isChangingMusic;
+
     public string targetSceneName;
     public GameObject itSelf;
 
@@ -17,11 +20,21 @@ public class RemoverDDOL : MonoBehaviour
 
     void Start()
     {
-        counterObject = GameObject.Find("Scor");
-        Destroy(counterObject);
-        canvasObject = GameObject.Find("FruitCanvas");
-        Destroy(canvasObject);
-        source.Stop();
-        source.Play();
+        if (isRemovingCounter)
+        {
+            counterObject = GameObject.Find("Scor");
+            Destroy(counterObject);
+            canvasObject = GameObject.Find("FruitCanvas");
+            Destroy(canvasObject);
+            source.Stop();
+            source.Play();
+        }
+        else
+        {
+            counterObject = GameObject.Find("Scor");
+            counterObject.GetComponent<AudioSource>().enabled = false;
+            source.Stop();
+            source.Play();
+        }
     }
 }

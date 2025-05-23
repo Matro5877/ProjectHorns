@@ -1027,7 +1027,7 @@ GameObject:
   - component: {fileID: 4222490703158390196}
   m_Layer: 15
   m_Name: BushExit
-  m_TagString: Untagged
+  m_TagString: BushExit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

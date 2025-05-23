@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class scre : MonoBehaviour
 {
@@ -23,11 +24,17 @@ public class scre : MonoBehaviour
 
     public TMP_Text scoreText;
 
+    public string destination;
+
     // Start is called before the first frame update
     void Start()
-    {
-        healthCount = 3;
+    {   
         DontDestroyOnLoad(this);
+        if (destination != null)
+        {
+            SceneManager.LoadScene(destination);
+        }
+        healthCount = 5;
     }
 
     // Update is called once per frame

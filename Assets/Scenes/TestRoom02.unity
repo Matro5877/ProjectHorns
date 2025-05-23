@@ -179,6 +179,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
+--- !u!212 &78286127 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8429877385423368, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
+  m_PrefabInstance: {fileID: 78286126}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &78286128 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7668219693738745082, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
+  m_PrefabInstance: {fileID: 78286126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &777743286
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dafc0738c35a504ebe657f1dbf5f53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charaSprite: {fileID: 78286127}
+  charaDeathSprite: {fileID: 78286128}
   fadeIn: 0
   destination: Level01
   transitionObject: {fileID: 1636493543}
@@ -693,6 +705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dafc0738c35a504ebe657f1dbf5f53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charaSprite: {fileID: 0}
+  charaDeathSprite: {fileID: 0}
   fadeIn: 1
   destination: 
   transitionObject: {fileID: 1979108513}

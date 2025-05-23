@@ -259,7 +259,7 @@ public class Chara : MonoBehaviour
 
     public void Controls()
     {
-        rightControl = ((keysEnabled || forcedRight) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxis("HorizontalMenu") > 0));
+        rightControl = (forcedRight || (keysEnabled && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxis("HorizontalMenu") > 0)));
         leftControl = (keysEnabled && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxis("HorizontalMenu") < 0));
         rightControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.Keypad6) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));
         leftControlUp = (keysEnabled && (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.Keypad4) || Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxis("HorizontalMenu") == 0));

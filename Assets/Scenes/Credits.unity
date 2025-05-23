@@ -342,16 +342,13 @@ MonoBehaviour:
 
 
 
-
-
-
     <SIZE=80>THANK YOU FOR PLAYING</SIZE>
 
 
 
 
     <SIZE=20>press
-    "ESCAPE" or "START" to proceed</SIZE>'
+    "ESCAPE" or "START" to restart</SIZE>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b559f742a1804ed4a9c4bff698e792d2, type: 2}
   m_sharedMaterial: {fileID: -5861457445588575908, guid: b559f742a1804ed4a9c4bff698e792d2, type: 2}

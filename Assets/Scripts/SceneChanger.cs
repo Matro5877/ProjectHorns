@@ -6,6 +6,9 @@ using DG.Tweening;
 
 public class SceneChanger : MonoBehaviour
 {
+    public SpriteRenderer charaSprite;
+    public SpriteRenderer charaDeathSprite;
+
     public bool fadeIn;
     public string destination;
 
@@ -39,6 +42,14 @@ public class SceneChanger : MonoBehaviour
     {
         if (collider.CompareTag("Triggerer") && !fadeIn)
         {
+            counterObject = GameObject.Find("Scor");
+            if (counterObject != null)
+            {
+                counter = counterObject.GetComponent<scre>();
+            }
+            charaSprite.enabled = true;
+            charaDeathSprite.enabled = false;
+            counter.healthCount = 4;
             StartCoroutine(FadeOut());
         }
     }

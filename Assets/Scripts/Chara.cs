@@ -9,6 +9,7 @@ using static Unity.Collections.AllocatorManager;
 public class Chara : MonoBehaviour
 {
     public int fruitCount;
+    public bool isDead;
 
     [Header("Paramètres Physique")]
     public float walkingSpeed;
@@ -723,7 +724,7 @@ public class Chara : MonoBehaviour
 
     public void CollisionsDoubleCheck()
     {
-        if (leftGroundCheck || rightGroundCheck)
+        if ((leftGroundCheck || rightGroundCheck) && !isDead)
         {
             groundCheck = true;
         }
@@ -731,7 +732,7 @@ public class Chara : MonoBehaviour
         {
             groundCheck = false;
         }
-        if (leftBottomWallCheck || leftTopWallCheck)
+        if ((leftBottomWallCheck || leftTopWallCheck) && !isDead)
         {
             leftWallCheck = true;
         }
@@ -739,7 +740,7 @@ public class Chara : MonoBehaviour
         {
             leftWallCheck = false;
         }
-        if (rightBottomWallCheck || rightTopWallCheck)
+        if ((rightBottomWallCheck || rightTopWallCheck) && !isDead)
         {
             rightWallCheck = true;
         }
@@ -747,7 +748,7 @@ public class Chara : MonoBehaviour
         {
             rightWallCheck = false;
         }
-        if (leftCeilingCheck || rightCeilingCheck)
+        if ((leftCeilingCheck || rightCeilingCheck) && !isDead)
         {
             ceilingCheck = true;
         }

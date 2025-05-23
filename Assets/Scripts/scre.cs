@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class scre : MonoBehaviour
 {
+    public SpriteRenderer charaSprite;
+    public SpriteRenderer charaDeathSprite;
     public Chara chara;
     public GameObject charaObject;
 
@@ -55,7 +57,17 @@ public class scre : MonoBehaviour
 
         if (healthCount < 1)
         {
-            //Die
+            charaObject = GameObject.Find("Chara");
+            if (charaObject != null)
+            {
+                chara = charaObject.GetComponent<Chara>();
+                chara.isDead = true;
+                charaSprite = GameObject.Find("Chara").GetComponent<SpriteRenderer>();
+                charaDeathSprite = GameObject.Find("CharaDeath").GetComponent<SpriteRenderer>();
+                charaSprite.enabled = false;
+                charaDeathSprite.enabled = true;
+
+            }
         }
         if (healthCount > 4)
         {

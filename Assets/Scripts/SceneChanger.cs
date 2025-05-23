@@ -48,7 +48,7 @@ public class SceneChanger : MonoBehaviour
         transition.color = black;
         transition.material.DOColor(black, 0f);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0f);
 
         transition.material.DOColor(transparentBlack, 1f);
     }

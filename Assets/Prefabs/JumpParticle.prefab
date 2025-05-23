@@ -51,6 +51,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2190198752932894519}
   chara: {fileID: 3479725058692424441, guid: 30f02a6baf0f8c948b820f2c0cda96cc, type: 3}
   direction: {x: 0, y: 0}
+  reverse: 0
 --- !u!212 &2190198752932894519
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -91,7 +92,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_Sprite: {fileID: -1900151726, guid: 9e255a47bb5ce2b4b915715d1b028125, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

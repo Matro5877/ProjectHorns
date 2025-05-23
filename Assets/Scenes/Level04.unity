@@ -7020,9 +7020,9 @@ MonoBehaviour:
   charaSprite: {fileID: 1452699438}
   charaDeathSprite: {fileID: 1452699439}
   fadeIn: 0
-  destination: Level01
-  transitionObject: {fileID: 0}
-  transition: {fileID: 0}
+  destination: Level04
+  transitionObject: {fileID: 937270075}
+  transition: {fileID: 937270074}
   counterObject: {fileID: 0}
   counter: {fileID: 0}
 --- !u!61 &748866214

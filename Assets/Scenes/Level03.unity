@@ -1943,10 +1943,10 @@ MonoBehaviour:
   charaSprite: {fileID: 1452699439}
   charaDeathSprite: {fileID: 1452699438}
   fadeIn: 0
-  destination: Level01
+  destination: Level03
   transitionObject: {fileID: 0}
-  transition: {fileID: 0}
-  counterObject: {fileID: 0}
+  transition: {fileID: 560566714}
+  counterObject: {fileID: 560566715}
   counter: {fileID: 0}
 --- !u!61 &177952261
 BoxCollider2D:

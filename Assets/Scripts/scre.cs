@@ -87,6 +87,12 @@ public class scre : MonoBehaviour
         savedDynamicFruitCount = dynamicFruitCount;
     }
 
+    public void LoadFruitCount()
+    {
+        fruitCount = savedFruitCount;
+        dynamicFruitCount = 0;
+    }
+
     public void DynamicFruitCountController()
     {
         if (dynamicFruitCount == 6)

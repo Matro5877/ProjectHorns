@@ -6852,6 +6852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dafc0738c35a504ebe657f1dbf5f53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSaving: 0
   charaSprite: {fileID: 1452699439}
   charaDeathSprite: {fileID: 1452699438}
   fadeIn: 0
@@ -7133,6 +7134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dafc0738c35a504ebe657f1dbf5f53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSaving: 0
   charaSprite: {fileID: 1452699439}
   charaDeathSprite: {fileID: 1452699438}
   fadeIn: 0
@@ -10576,7 +10578,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -9
   m_Sprite: {fileID: 21300000, guid: 719e4b8f2fa3d6d42b8deb3d641e2d4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -10806,7 +10808,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -9
+  m_SortingOrder: -8
   m_Sprite: {fileID: 21300000, guid: 20f0e9f1860b2e14e916a6e4a022304e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11357,6 +11359,10 @@ PrefabInstance:
     - target: {fileID: 5662527203850757254, guid: 57ec731c135d2924b9a959703c54f131, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804723367147129935, guid: 57ec731c135d2924b9a959703c54f131, type: 3}
+      propertyPath: isSaving
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6804723367147129935, guid: 57ec731c135d2924b9a959703c54f131, type: 3}
       propertyPath: transition

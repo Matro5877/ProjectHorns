@@ -6,6 +6,8 @@ using DG.Tweening;
 
 public class SceneChanger : MonoBehaviour
 {
+    public bool isSaving;
+
     public SpriteRenderer charaSprite;
     public SpriteRenderer charaDeathSprite;
 
@@ -76,8 +78,15 @@ public class SceneChanger : MonoBehaviour
         {
             counter = counterObject.GetComponent<scre>();
         }
-        counter.SaveFruitCount();
-
+        
+        if (isSaving)
+        {
+            counter.SaveFruitCount();
+        }
+        else
+        {
+            counter.LoadFruitCount();
+        }
         SceneManager.LoadScene(destination);
     }
 
